@@ -1,0 +1,29 @@
+
+<div class="container mt-5">
+	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+		<strong>{{ errormsg }}</strong>
+	  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+
+	<form [formGroup]="formAnggota" (ngSubmit)="userSubmit()">
+		<div class="col-lg-4 mt-2">
+			<input type="text" formControlName="nama" class="form" placeholder="Masukan nama lengkap">
+		</div>
+
+		<div class="col-lg-4 mt-2">
+			<input type="text" formControlName="email" class="form" placeholder="Masukan alamat email">
+		</div>
+
+		<div class="col-lg-4 mt-2">
+			<input type="text" formControlName="noTelpon" class="form" placeholder="Masukan nomor telepon">
+		</div>
+
+		<div class="col-lg-4 mt-2">
+			<button class="btn btn-primary">BUAT</button>
+		</div>
+
+
+
+	</form>
+</div>
+

@@ -1,0 +1,25 @@
+<div class="container mt-5">
+	<table class="table">
+	  <thead>
+	    <tr>
+	      <th scope="col">#</th>
+	      <th scope="col">Nama</th>
+	      <th scope="col">Email</th>
+	      <th scope="col">No. Telepon</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr *ngFor = "let anggota of readData">
+	    <th scope="row">{{ anggota.id }}</th>
+	    <td>{{ anggota.nama }}</td>
+	    <td>{{ anggota.email }}</td>
+	    <td>{{ anggota.noTelpon }}</td>
+	    </tr>
+	  </tbody>
+	</table>
+</div>
+
+
+
+
+
