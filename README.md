@@ -28,7 +28,7 @@ Frontend:
 # RESOURCE
 1. Project Manager : 
 2. Software Analyst :
-3. software architect :
+3. Software architect :
 4. Programmer & Designer : Raden Dwitama Baliano
 
 
