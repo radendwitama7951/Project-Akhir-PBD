@@ -5,6 +5,7 @@
 
 // Gunakan modul mysql
 const mysql = require("mysql2");
+const fs = require("fs");
 
 // Hubungkan database
 const database = mysql.createConnection({
@@ -31,9 +32,9 @@ const sql_createDB = `/*
 	);
 `;
 
-const sql_addData = `/*
-		Menambah data
-	*/
+const sql_createTBMantan = fs.readFileSync("scripts/initData.mantan.sql").toString();
+
+const sql_addData = `/*	Menambah data*/
 		INSERT INTO pbd_project_akhir.tb_anggota (nama, email, noTelpon)
 		VALUES ?
 `;
@@ -48,14 +49,14 @@ database.query(sql_createDB,(error, result) => {
 		if (error) throw error;
 		console.log("Database: Ok");
 	});
-/*
-database.query(sql_addData, [values], (error, result) => {
+
+database.query(sql_createTBMantan, [values], (error, result) => {
 		if (error) throw error;
 		console.log("Database: Ok");
 		console.log("Number of records inserted: " + result.affectedRows);
 	});
 
-*/
+
 
 database.end(error => {
 	if (error) throw error

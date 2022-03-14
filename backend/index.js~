@@ -20,6 +20,17 @@ const app = express();
 
 // Middleware
 app.use(cors());
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "localhost:3000"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+app.use((req, res, next) => {
+	res.header("Access-Control-Allow-Origin", "*");
+	res.header("Access-Control-Allow-Header", "Origin, X-Requested-Width, Content-Type, Accept");
+	next();
+
+})
 app.use(bodyparser.json());
 
 
@@ -44,7 +55,9 @@ database_projectAkhir.connect(error => {
 
 
 // GET semua data
+/* Semua data anggota */
 app.get("/anggota", (request, response) => {
+	res.set('Access-Control-Allow-Origin', 'http://localhost:4200');
 	console.log("GET semua user");
 	sql_query = `SELECT * FROM tb_anggota`;
 	database_projectAkhir.query(sql_query, (error, result) => {
@@ -62,13 +75,41 @@ app.get("/anggota", (request, response) => {
 	});
 });
 
+/* Semua data mantan */
+app.get("/admin/manage/mantan", (request, response) => {
+	res.set('Access-Control-Allow-Origin', 'http://localhost:4200');
+	console.log("GET semua data mantan");
+	sql_query = `SELECT id, prioritas, nama_spesial, kencan_terakhir FROM mantan`;
+	database_projectAkhir.query(sql_query, (error, result) => {
+		if (error) {
+			console.log(error, "errs");
+		};
+
+		if (result.length > 0) {
+			response.send({
+				message: "Semua data mantan",
+				data: result
+			});
+		};
+
+	});
+
+} );
+
+
 
 // GET satu data
+/* GET anggota by id */
 app.get("/anggota/:id", (request, response) => {
 	const getIdData = request.params.id;
+
+
+		
 	sql_query = `SELECT * FROM tb_anggota WHERE id = ${getIdData}`;
 
 	database_projectAkhir.query(sql_query, (error, result) => {
+
+
 		if (error) {console.log(error)};
 		
 		if (result.length > 0) {
@@ -78,13 +119,37 @@ app.get("/anggota/:id", (request, response) => {
 			});
 		} else {
 			response.send({
-				message: "Data anggota tidak ditemukan !"
+				message: "Data anggota tidak ditemukan !",
+				data: {}
 			});
 		}
 	})
 	
 });
 
+/* GET mantan by id */
+app.get("/admin/manage/mantan/:id", (request, response) => {
+	const getIdData = request.params.id;
+	let sql_query = `SELECT * FROM mantan WHERE id = ${getIdData}`;
+
+	database_projectAkhir.query(sql_query, (error, result) => {
+		if (error) {
+			console.log(error);
+		};
+
+		if (result.length > 0) {
+			response.send({
+				message: `Mantan ID ${getIdData}`,
+				data: result
+			});
+		} else {
+			response.send({
+				message: `Mantan ID ${getIdData} tidak ditemukan !`,
+				data: {}
+			});
+		};
+	})
+});
 
 
 
@@ -181,7 +246,7 @@ app.delete("/anggota/:id", (request, response) => {
 
 // run server di port 3000
 app.listen(3000, () => {
-	console.log("Server berjalan !");
+	console.log("Server berjalan di port : " + 3000);
 });
 
 

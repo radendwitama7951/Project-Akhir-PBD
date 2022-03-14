@@ -1,0 +1,164 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+/* For use in src/lib/core/theming/_palette.scss */
+$md-simpsdarkpalette: (
+    50 : #e6e6e6,
+    100 : #c0c0c0,
+    200 : #979797,
+    300 : #6d6d6d,
+    400 : #4d4d4d,
+    500 : #2e2e2e,
+    600 : #292929,
+    700 : #232323,
+    800 : #1d1d1d,
+    900 : #121212,
+    A100 : #ef6b6b,
+    A200 : #e93d3d,
+    A400 : #f30000,
+    A700 : #da0000,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+/* For use in src/lib/core/theming/_palette.scss */
+$md-simpspinkpalette: (
+    50 : #ffe7fa,
+    100 : #ffc2f2,
+    200 : #ff9ae9,
+    300 : #ff72e0,
+    400 : #ff53da,
+    500 : #ff35d3,
+    600 : #ff30ce,
+    700 : #ff28c8,
+    800 : #ff22c2,
+    900 : #ff16b7,
+    A100 : #ffffff,
+    A200 : #fffcfe,
+    A400 : #ffc9ed,
+    A700 : #ffafe4,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-alert: (
+    50 : #e8eaf6,
+    100 : #c5cae9,
+    200 : #9fa8da,
+    300 : #7986cb,
+    400 : #5c6bc0,
+    500 : #3f51b5,
+    600 : #3949ab,
+    700 : #303f9f,
+    800 : #283593,
+    900 : #1a237e,
+    A100 : #8c9eff,
+    A200 : #536dfe,
+    A400 : #3d5afe,
+    A700 : #304ffe,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+
+
+
+
+$my-custom-level: mat.define-typography-level(
+  $font-family: Montserrat,
+  $font-weight: 400,
+  $font-size: 1rem,
+  $line-height: 1,
+  $letter-spacing: normal,
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$frontend-primary: mat.define-palette($md-simpsdarkpalette, 500);
+$frontend-accent: mat.define-palette($md-simpsdarkpalette, 50, A700, 300);
+$frontend-typography: mat.define-typography-config(
+    $font-family: 'Montserrat',
+  );
+
+// The warn palette is optional (defaults to red).
+$frontend-warn: mat.define-palette(mat.$red-palette);
+$frontend-alert: mat.define-palette($md-alert, A700);
+
+
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$frontend-theme: mat.define-light-theme((
+  color: (
+    primary: $frontend-primary,
+    accent: $frontend-accent,
+    alert: $frontend-alert,
+    warn: $frontend-warn,
+  ),
+  typography: $frontend-typography
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($frontend-theme);
+
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Montserrat;}
+
+
+.primary-color {
+  color: #ff35d3;
+};

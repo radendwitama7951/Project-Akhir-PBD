@@ -1,0 +1,21 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+.secondary-color {
+  background-color: #1f1f1f
+};
+
+.primary-color {
+  color: #ff35d3
+};
+
+.nav-container {
+  height: 100%;
+  width: 100%;
+  text-align: center;
+  font-kerning: 100pt;
+  a {
+    font-size: small;
+    font-weight: 500;
+  };
+};
