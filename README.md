@@ -14,6 +14,7 @@ Base:
 1. NodeJS
 2. NPM
 3. XAMPP
+4. Nodemon
 
 Backend:
 1. ExpressJS
