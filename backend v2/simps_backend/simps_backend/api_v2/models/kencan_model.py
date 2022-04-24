@@ -29,7 +29,7 @@ class Kencan(models.Model):
     )
 
     def __str__(self):
-        return self.kencan_id
+        return '%d' % (self.kencan_id)
 
 
 

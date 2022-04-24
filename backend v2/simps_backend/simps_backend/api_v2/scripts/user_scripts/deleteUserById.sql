@@ -1,2 +1,3 @@
 SELECT * FROM `api_v2_user`
-WHERE %s
+WHERE `user_id` = %s
+LIMIT 1;

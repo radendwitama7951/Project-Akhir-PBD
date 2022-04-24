@@ -23,6 +23,6 @@ class Pasangan(models.Model):
     )
 
     def __str__(self):
-        return self.pasangan_id
+        return '%s %s' % (self.first_name, self.last_name)
 
 

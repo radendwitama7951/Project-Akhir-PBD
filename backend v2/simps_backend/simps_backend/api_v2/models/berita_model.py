@@ -10,4 +10,4 @@ class Berita (models.Model):
     thumbnail = models.URLField(verbose_name="Url thumbnail")
 
     def __str__(self):
-        return self.berita_id
+        return '%s' % (self.judul)
