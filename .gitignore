@@ -1,3 +1,14 @@
+# Directories to Ignores
+backend/
+design/
+frontend/
+simps-web/
+
+
+
+# Files to Ignores
+package-lock.json
+
 
 *.swp
 *.un~
