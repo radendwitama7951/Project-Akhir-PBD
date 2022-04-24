@@ -1,0 +1,21 @@
+<ion-toolbar color="medium">
+  <ion-buttons slot="start">
+    <ion-back-button></ion-back-button>
+  </ion-buttons>
+  <ion-title>SIMPS</ion-title>
+  <ion-button slot="secondary" color="light" fill="clear">
+    <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+  </ion-button>
+</ion-toolbar>
+
+<ion-toolbar color="dark">
+  <ion-grid fixed="true">
+      <ion-col *ngFor="let menu of menuOption" 
+        size="30" offset="1"> 
+        <ion-button fill="clear"
+                    [routerLink]="[menu.url]" routerLinkActive="router-link-active" >
+          {{ menu.name }} 
+        </ion-button>
+      </ion-col>
+  </ion-grid>
+</ion-toolbar>

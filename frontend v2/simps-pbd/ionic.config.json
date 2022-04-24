@@ -1,0 +1,7 @@
+{
+  "name": "simps-pbd",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
