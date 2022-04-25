@@ -1,8 +1,11 @@
 from django.http.response import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.reverse import reverse
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from simps_backend.api_v2.serializers.pasangan_serializer import PasanganCreateUpdateSerializer, PasanganSerialiazer
+from simps_backend.api_v2.services.pasangan_service import createPasangan, deletePasanganById, getAllPasangan, getPasanganById, getPasanganById, updatePasanganById
+
 
 """
 @params APIView
@@ -12,10 +15,23 @@ Request dan Response controller
 """
 class PasanganView(APIView):
     def get(self, request, format=None):
-        return Response({ 'messages': '[GET] Success' }, status=status.HTTP_200_OK)
+        try :
+            query = getAllPasangan() 
+            serializer = PasanganSerialiazer(query, many=True)
+        except :
+            raise Http404
+       
+        return Response(serializer.data)
 
     def post(self, request, format=None):
-        return Response({ 'messages': '[POST] Success' }, status=status.HTTP_201_CREATED)
+        serializer = PasanganCreateUpdateSerializer(data=request.data)
+        
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        createPasangan(serializer.data)
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 """
@@ -25,28 +41,43 @@ Request dan Response controller
 @endpoints /pasangan/<int>/
 """
 class PasanganDetailView(APIView):
-    def get_object(self, pk):
-        try:
-            return Response({'messages':'[GET by ID] Success'})
-        except (1):
+    def get(self, request, pk, format=None):
+        try :
+            query = getPasanganById(pk)
+            serializer = PasanganSerialiazer(data=query[0].__dict__)
+        except IndexError:
             raise Http404
 
-    def get(self, request, pk, format=None):
-        return Response({'messages':'[GET by ID] Success'})
 
-    def put(self, request, pk, format=None):
-        if (0):
-            return Response({'messages': '[PUT] Failed'},
-                    status=status.HTTP_400_BAD_REQUEST)
-        return Response({'messages': '[PUT] Success'})
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
+
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+            
 
     def delete(self, request, pk, format=None):
-        return Response({'messages': '[DELETE] Success'})
+        try :
+            deletePasanganById(pk)
+        except IndexError:
+            raise Http404
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def put(self, request, pk, format=None):
+        serializer = PasanganCreateUpdateSerializer(data=request.data)
+
+        if not serializer.is_valid():
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            updatePasanganById(pk, serializer.data)
+        except IndexError:
+            raise Http404
+
+        return Response(serializer.data)
 
 
 
 
-
-
-
-
+        

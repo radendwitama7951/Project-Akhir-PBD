@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 
 class StatusPasangan (models.Model):
     status_pasangan_id = models.IntegerField(primary_key=True)

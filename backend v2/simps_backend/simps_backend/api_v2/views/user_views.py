@@ -8,8 +8,14 @@ from rest_framework import viewsets
 from simps_backend.api_v2.models.user_model import User
 from simps_backend.api_v2.serializers.user_serializer import UserCreateUpdateSerializer,UserSerializer
 from simps_backend.api_v2.services.user_service import createUser, deleteUserById, getAllUser, getUserById, updateUserById
-from simps_backend.settings import SQLSCRIPTS_FOLDER
 
+
+"""
+@params APIView
+Request dan Response controller
+
+@endpoints /users/
+"""
 class UserView(APIView):
     def get(self, request, format=None):
         try :
@@ -17,8 +23,7 @@ class UserView(APIView):
             serializer = UserSerializer(query, many=True)
         except :
             raise Http404
-
-        
+       
         return Response(serializer.data)
 
     def post(self, request, format=None):
@@ -29,10 +34,15 @@ class UserView(APIView):
 
         createUser(serializer.data)
 
-
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+"""
+@params APIView
+Request dan Response controller
+
+@endpoints /user/<int>/
+"""
 class UserDetailView(APIView):
     def get(self, request, pk, format=None):
         try :
@@ -45,7 +55,6 @@ class UserDetailView(APIView):
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
-        print(serializer)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
             
@@ -53,7 +62,7 @@ class UserDetailView(APIView):
     def delete(self, request, pk, format=None):
         try :
             deleteUserById(pk)
-        except :
+        except IndexError:
             raise Http404
 
         return Response(status=status.HTTP_204_NO_CONTENT)

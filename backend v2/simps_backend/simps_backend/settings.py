@@ -41,14 +41,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'simps_backend.api_v2',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_mysql',
+
     'rest_framework',
+    'simps_backend.api_v2',
 ]
 
 MIDDLEWARE = [

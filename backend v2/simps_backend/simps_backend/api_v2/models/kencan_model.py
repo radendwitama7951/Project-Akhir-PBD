@@ -1,5 +1,4 @@
 from django.db import models
-from django.conf import settings
 
 from simps_backend.api_v2.models.pasangan_model import Pasangan
 
@@ -13,7 +12,7 @@ class StatusKencan(models.Model):
 class Kencan(models.Model): 
     kencan_id = models.AutoField(primary_key=True)
     tanggal = models.DateField()
-    jam = models.TimeField(auto_now_add=False, auto_now=False)
+    jam = models.TimeField(auto_now_add=False)
     tempat = models.TextField()
     pasangan = models.ForeignKey(
             Pasangan,
