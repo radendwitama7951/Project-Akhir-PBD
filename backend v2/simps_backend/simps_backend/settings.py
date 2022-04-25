@@ -49,7 +49,7 @@ SECRET_KEY = 'django-insecure-gmcp*0*@_vp42%d3-az7y$4@bes4hprpby8d_rb8gmwbnh)u(1
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://simps-api.herokuapp.com/', 'http://localhost']
 
 
 # Application definition

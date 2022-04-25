@@ -9,8 +9,6 @@ parso==0.7.1
 pluggy==1.0.0
 psycopg2==2.9.3
 PyMySQL==1.0.2
-python-jsonrpc-server==0.4.0
-python-language-server==0.36.2
 pytz==2022.1
 sqlparse==0.4.2
 tzdata==2022.1
