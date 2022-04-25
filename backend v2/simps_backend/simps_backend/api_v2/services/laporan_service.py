@@ -1,4 +1,3 @@
-from django.http.response import Http404
 from django.db import connection
 from simps_backend.api_v2.models.laporan_model import Laporan
 from simps_backend.settings import SQLSCRIPTS_FOLDER
