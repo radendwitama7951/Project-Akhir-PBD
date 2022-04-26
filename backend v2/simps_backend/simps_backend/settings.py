@@ -14,19 +14,6 @@ from pathlib import Path
 import os
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
-PROJECT_ROOT   =   os.path.join(os.path.abspath(__file__))
-STATIC_ROOT  =   os.path.join(PROJECT_ROOT, 'staticfiles')
-STATIC_URL = '/static/'
-
-# Extra lookup directories for collectstatic to find static files
-STATICFILES_DIRS = (
-    os.path.join(PROJECT_ROOT, 'static'),
-)
-
-#  Add configuration for static files storage using whitenoise
-STATICFILES_STORAGE = 'WhiteNoise.django.GzipManifestStaticFilesStorage'
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -47,9 +34,9 @@ SQLSCRIPTS_FOLDER = os.path.join('simps_backend/api_v2/scripts')
 SECRET_KEY = 'django-insecure-gmcp*0*@_vp42%d3-az7y$4@bes4hprpby8d_rb8gmwbnh)u(1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['https://simps-api.herokuapp.com/', 'http://localhost']
+DEBUG = False
+# ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ['simps-api.herokuapp.com', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -149,7 +136,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/1.11/howto/static-files/
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 

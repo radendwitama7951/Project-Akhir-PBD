@@ -1,1 +1,1 @@
-web: gunicorn.simps_backend.wsgi --log-file
+web: gunicorn simps_backend.wsgi
