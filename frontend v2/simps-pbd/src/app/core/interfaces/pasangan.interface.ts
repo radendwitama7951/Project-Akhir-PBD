@@ -7,11 +7,12 @@ export enum STATUS_PASANGAN {
 }
 
 export interface PasanganInterface {
-  id_pasangan: number;
+  pasangan_id?: number;
   first_name: string;
   last_name: string;
   special_name: string;
   avatar: string;
   kencan_terakhir: string;
-  id_status: number | STATUS_PASANGAN;
+  status_pasangan_id?: string | number | STATUS_PASANGAN;
+  status_pasangan?: string;
 }

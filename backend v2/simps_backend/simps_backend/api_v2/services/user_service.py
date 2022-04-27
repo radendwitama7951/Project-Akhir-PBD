@@ -36,7 +36,6 @@ def updateUserById(user_id, data):
     sql = open(SQLSCRIPTS_FOLDER+'/user_scripts/updateUserById.sql')
     data = list(data.values())
     data.append(user_id)
-    print(data)
 
     with connection.cursor() as cursor:
         cursor.execute(sql.read(), data)

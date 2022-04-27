@@ -1,4 +1,4 @@
 export interface StatusPasanganInterface {
-  id_status: number;
+  status_pasangan_id: number;
   keterangan: string;
 }

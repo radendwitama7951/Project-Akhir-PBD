@@ -1,14 +1,16 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { EntityCollectionService, EntityServices } from '@ngrx/data';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import {
   PasanganInterface,
   STATUS_PASANGAN,
 } from 'src/app/core/interfaces/pasangan.interface';
+import { PasanganService } from 'src/app/core/services/pasangan.service';
+import { PasanganDetailFormComponent } from '../pasangan-detail-form/pasangan-detail-form.component';
 
 @Component({
   selector: 'app-pasangan-table',
@@ -19,14 +21,12 @@ export class PasanganTableComponent {
   /* @Input parameter untuk menentukan
    * ini tabel buat mantan | pacar | selingkuhan
    * */
-  @Input() public statusPasangan: STATUS_PASANGAN = 0;
+  @Input() public statusPasangan: number | STATUS_PASANGAN = 0;
 
   /* @Map map status pasangan ke bentuk array
    * */
   private statusPasanganMap: string[] = ['Mantan', 'Pacar', 'Selingkuhan'];
 
-  private pasanganService: EntityCollectionService<PasanganInterface>;
-  pasangan$!: Observable<PasanganInterface>;
   loading$!: Observable<boolean>;
   displayedColumns: string[] = ['special_name', 'kencan_terakhir', 'actions'];
 
@@ -37,29 +37,41 @@ export class PasanganTableComponent {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private entityServices: EntityServices) {
-    console.log(this.statusPasangan[this.statusPasangan]);
+  constructor(
+    private _pasanganService: PasanganService,
+    private dialog: MatDialog
+  ) {
     // Panggil Store Service
-    this.pasanganService =
-      this.entityServices.getEntityCollectionService('Pasangan');
-    this.loading$ = this.pasanganService.loading$;
-
-    // Connect
-    this.pasanganService
-      .getAll()
+    this._pasanganService.entities$
       .pipe(
-        map((dataPasangan: PasanganInterface[]) =>
-          dataPasangan.filter(
+        map((dataPasangan: PasanganInterface[]) => {
+          return dataPasangan.filter(
             (pasangan: PasanganInterface) =>
-              pasangan.id_status == this.statusPasangan
-          )
-        )
+              pasangan.status_pasangan_id == this.statusPasangan
+          );
+        })
       )
       .subscribe((dataPasangan: PasanganInterface[]) => {
         this.dataSource.data = dataPasangan;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
+    this.loading$ = this._pasanganService.loading$;
+
+    // this.openDetailForm(1);
+  }
+
+  public openDetailForm(pasangan_id: number): void {
+    let data: Observable<PasanganInterface> =
+      this._pasanganService.selectEntityById(pasangan_id);
+    const dialogRef: MatDialogRef<PasanganDetailFormComponent> =
+      this.dialog.open(PasanganDetailFormComponent, {
+        data: data,
+      });
+
+    dialogRef.afterClosed().subscribe((returned: any) => {
+      console.log(`Return this !`);
+    });
   }
 
   applyFilter(event: Event) {

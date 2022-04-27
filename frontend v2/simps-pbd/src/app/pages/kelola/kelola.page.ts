@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { PasanganService } from 'src/app/core/services/pasangan.service';
 
 @Component({
   selector: 'app-kelola',
@@ -6,10 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./kelola.page.scss'],
 })
 export class KelolaPage implements OnInit {
-
-  constructor() { }
+  constructor(private _pasanganService: PasanganService) {}
 
   ngOnInit() {
+    this._pasanganService.getAll();
   }
-
 }

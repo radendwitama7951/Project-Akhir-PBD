@@ -42,7 +42,7 @@ export class MantanTableComponent {
       .pipe(
         map((dataPasangan: PasanganInterface[]) =>
           dataPasangan.filter(
-            (pasangan: PasanganInterface) => pasangan.id_status == 0
+            (pasangan: PasanganInterface) => pasangan.status_pasangan_id == 0
           )
         )
       )

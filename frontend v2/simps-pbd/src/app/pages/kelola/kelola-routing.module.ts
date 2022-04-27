@@ -6,8 +6,8 @@ import { KelolaPage } from './kelola.page';
 const routes: Routes = [
   {
     path: '',
-    component: KelolaPage
-  }
+    component: KelolaPage,
+  },
 ];
 
 @NgModule({

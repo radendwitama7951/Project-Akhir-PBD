@@ -1,7 +1,12 @@
 from django.http.response import Http404
 from django.db import connection
-from simps_backend.api_v2.models.kencan_model import Kencan
+from simps_backend.api_v2.models.kencan_model import Kencan, StatusKencan
 from simps_backend.settings import SQLSCRIPTS_FOLDER
+
+# Status Kencan
+def getAllStatusKencan():
+    sql = open(SQLSCRIPTS_FOLDER+'/kencan_scripts/getAllStatusKencan.sql')
+    return StatusKencan.objects.raw(sql.read())
 
 # @all()
 def getAllKencan():
@@ -36,7 +41,6 @@ def updateKencanById(kencan_id, data):
     sql = open(SQLSCRIPTS_FOLDER+'/kencan_scripts/updateKencanById.sql')
     data = list(data.values())
     data.append(kencan_id)
-    print(data)
 
     with connection.cursor() as cursor:
         cursor.execute(sql.read(), data)

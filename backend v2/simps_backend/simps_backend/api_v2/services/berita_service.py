@@ -35,7 +35,6 @@ def updateBeritaById(berita_id, data):
     sql = open(SQLSCRIPTS_FOLDER+'/berita_scripts/updateBeritaById.sql')
     data = list(data.values())
     data.append(berita_id)
-    print(data)
 
     with connection.cursor() as cursor:
         cursor.execute(sql.read(), data)

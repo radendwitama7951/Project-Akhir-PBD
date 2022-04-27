@@ -18,7 +18,7 @@ export class BeritaPage implements OnInit {
   private beritaService!: EntityCollectionService<BeritaInterface>;
   public berita$!: Observable<BeritaInterface[]>;
 
-  constructor(entityServices: EntityServices) {
+  constructor(private entityServices: EntityServices) {
     this.beritaService = entityServices.getEntityCollectionService('Berita');
 
     this.beritaService.getAll();
@@ -26,7 +26,7 @@ export class BeritaPage implements OnInit {
   }
 
   ngOnInit() {
-    this.beritaService
+    this.berita$.subscribe(console.log);
   }
 
   public search(beritaId: string): void {

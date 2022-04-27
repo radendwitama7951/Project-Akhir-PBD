@@ -1,6 +1,7 @@
 export interface BeritaInterface {
-  id_berita: number;
+  berita_id: number;
   judul: string;
+  tanggal: string;
   deskripsi: string;
   url: string;
   thumbnail: string;

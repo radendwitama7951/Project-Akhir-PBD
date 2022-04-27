@@ -1,1 +1,1 @@
-SELECT * FROM api_v2_berita
+SELECT * FROM api_v2_berita;

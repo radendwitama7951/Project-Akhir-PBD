@@ -1,5 +1,6 @@
 from django.http.response import Http404
 from django.db import connection
+from django.views.decorators.csrf import csrf_exempt
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -31,6 +32,7 @@ class UserView(APIView):
         
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
         createUser(serializer.data)
 

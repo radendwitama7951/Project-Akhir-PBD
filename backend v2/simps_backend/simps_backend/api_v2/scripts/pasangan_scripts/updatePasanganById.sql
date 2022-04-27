@@ -1,0 +1,11 @@
+UPDATE  api_v2_pasangan
+
+SET
+    first_name = %s,
+    last_name = %s,
+    special_name = %s,
+    avatar = %s,
+    kencan_terakhir = NOW(),
+    status_pasangan_id = %s
+WHERE pasangan_id = %s
+LIMIT 1;

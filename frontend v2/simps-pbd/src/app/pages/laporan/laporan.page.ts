@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EntityServices } from '@ngrx/data';
 
 @Component({
   selector: 'app-laporan',
@@ -6,10 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./laporan.page.scss'],
 })
 export class LaporanPage implements OnInit {
+  // private laporanService!: EntityCollectionService<LaporanInterface>;
+  // public laporan$!: Observable<LaporanInterface[]>;
 
-  constructor() { }
+  constructor(private enitityServices: EntityServices) {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -27,6 +27,10 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/laporan/laporan.module').then((m) => m.LaporanPageModule),
   },
+  {
+    path: 'user',
+    loadChildren: () => import('./pages/user/user.module').then( m => m.UserPageModule)
+  },
 ];
 
 @NgModule({

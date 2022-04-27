@@ -3,8 +3,19 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from simps_backend.api_v2.serializers.pasangan_serializer import PasanganCreateUpdateSerializer, PasanganSerialiazer
-from simps_backend.api_v2.services.pasangan_service import createPasangan, deletePasanganById, getAllPasangan, getPasanganById, getPasanganById, updatePasanganById
+from simps_backend.api_v2.serializers.pasangan_serializer import PasanganCreateUpdateSerializer, PasanganSerializer, StatusPasanganSerializer
+from simps_backend.api_v2.services.pasangan_service import createPasangan, deletePasanganById, getAllPasangan, getAllStatusPasangan, getPasanganById, getPasanganById, updatePasanganById
+
+# Status Pasangan
+class StatusPasanganView(APIView):
+    def get(self, request, format=None):
+        try :
+            query = getAllStatusPasangan() 
+            serializer = StatusPasanganSerializer(query, many=True)
+        except :
+            raise Http404
+       
+        return Response(serializer.data)
 
 
 """
@@ -17,7 +28,7 @@ class PasanganView(APIView):
     def get(self, request, format=None):
         try :
             query = getAllPasangan() 
-            serializer = PasanganSerialiazer(query, many=True)
+            serializer = PasanganSerializer(query, many=True)
         except :
             raise Http404
        
@@ -44,7 +55,7 @@ class PasanganDetailView(APIView):
     def get(self, request, pk, format=None):
         try :
             query = getPasanganById(pk)
-            serializer = PasanganSerialiazer(data=query[0].__dict__)
+            serializer = PasanganSerializer(data=query[0].__dict__)
         except IndexError:
             raise Http404
 

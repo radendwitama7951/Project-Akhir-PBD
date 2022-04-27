@@ -4,20 +4,25 @@ import { KencanInterface } from 'src/app/core/interfaces/kencan.interface';
 import { PasanganInterface } from 'src/app/core/interfaces/pasangan.interface';
 import { StatusPasanganInterface } from 'src/app/core/interfaces/status-pasangan.interface';
 import { UserInterface } from 'src/app/core/interfaces/user.interface';
+import { environment } from 'src/environments/environment';
 
 export const pluralNames = {
-  Berita: 'berita/all',
+  Berita: 'berita',
+  User: 'user',
+  Pasangan: 'pasangan',
+  Kencan: 'kencan',
 };
 
 export const defaultDataServiceConfig: DefaultDataServiceConfig = {
-  root: 'https://sanidatuhealthstore-backend-v1.herokuapp.com/api',
+  // root: environment.apiUrl,
+  root: 'https://simps-api.herokuapp.com/api/v2/',
   timeout: 5000, // request timeout
 };
 
 export const appEntityMetadata: EntityMetadataMap = {
   Berita: {
     entityName: 'Berita',
-    selectId: (berita: BeritaInterface) => berita.id_berita,
+    selectId: (berita: BeritaInterface) => berita.berita_id,
     entityDispatcherOptions: {
       optimisticAdd: true,
       optimisticUpdate: true,
@@ -25,15 +30,15 @@ export const appEntityMetadata: EntityMetadataMap = {
   },
   User: {
     entityName: 'User',
-    selectId: (user: UserInterface) => user.id_user,
+    selectId: (user: UserInterface) => user.user_id,
     entityDispatcherOptions: {
-      optimisticAdd: true,
-      optimisticUpdate: true,
+      optimisticAdd: false,
+      optimisticUpdate: false,
     },
   },
   Pasangan: {
     entityName: 'Pasangan',
-    selectId: (pasangan: PasanganInterface) => pasangan.id_pasangan,
+    selectId: (pasangan: PasanganInterface) => pasangan.pasangan_id,
     entityDispatcherOptions: {
       optimisticAdd: true,
       optimisticUpdate: true,
@@ -42,7 +47,7 @@ export const appEntityMetadata: EntityMetadataMap = {
   StatusPasangan: {
     entityName: 'StatusPasangan',
     selectId: (statusPasangan: StatusPasanganInterface) =>
-      statusPasangan.id_status,
+      statusPasangan.status_pasangan_id,
     entityDispatcherOptions: {
       optimisticAdd: true,
       optimisticUpdate: true,
@@ -50,7 +55,7 @@ export const appEntityMetadata: EntityMetadataMap = {
   },
   Kencan: {
     entityName: 'Kencan',
-    selectId: (kencan: KencanInterface) => kencan.id_kencan,
+    selectId: (kencan: KencanInterface) => kencan.kencan_id,
     entityDispatcherOptions: {
       optimisticAdd: true,
       optimisticUpdate: true,

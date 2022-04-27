@@ -6,9 +6,11 @@ import {
   KencanInterface,
   STATUS_KENCAN,
 } from 'src/app/core/interfaces/kencan.interface';
-import { EntityCollectionService, EntityServices } from '@ngrx/data';
-import { map, takeUntil } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
+import { KencanService } from 'src/app/core/services/kencan.service';
+import { PasanganService } from 'src/app/core/services/pasangan.service';
+import { PasanganInterface } from 'src/app/core/interfaces/pasangan.interface';
 
 @Component({
   selector: 'app-kencan-table',
@@ -18,33 +20,30 @@ import { Subscription } from 'rxjs';
 export class KencanTableComponent {
   /* @Entity config
    * */
-  private kencanService!: EntityCollectionService<KencanInterface>;
   private subscriptions!: Subscription;
+  public loading$!: Observable<boolean>;
 
-  displayedColumns: string[] = ['tanggal', 'id_pasangan', 'tempat', 'actions'];
+  displayedColumns: string[] = ['tanggal', 'pasangan', 'tempat', 'actions'];
   dataSource: MatTableDataSource<KencanInterface> = new MatTableDataSource([]);
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(entityServices: EntityServices) {
-    this.kencanService = entityServices.getEntityCollectionService('Kencan');
-    this.subscriptions = this.kencanService
+  constructor(
+    private _kencanService: KencanService,
+    public _pasanganService: PasanganService
+  ) {
+    this.subscriptions = this._kencanService
       .getAll()
-      .pipe(
-        map((dataKencan: KencanInterface[]) =>
-          dataKencan.filter(
-            (kencan: KencanInterface) =>
-              kencan.status == STATUS_KENCAN.TERJADWAL
-          )
-        )
-      )
       .subscribe((dataKencan: KencanInterface[]) => {
+        console.log(dataKencan);
         // Assign the data to the data source for the table to render
         this.dataSource.data = dataKencan;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
+
+    this.loading$ = this._kencanService.loading$;
   }
 
   ngOnDestroy() {

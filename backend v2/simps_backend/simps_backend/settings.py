@@ -24,7 +24,8 @@ settings_dir = os.path.dirname(__file__)
 # Path to services scripts
 SQLSCRIPTS_FOLDER = os.path.join('simps_backend/api_v2/scripts')
 
-
+# APPEND_SLASH
+APPEND_SLASH = False
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,6 +39,8 @@ DEBUG = False
 # ALLOWED_HOSTS = ['0.0.0.0']
 ALLOWED_HOSTS = ['simps-api.herokuapp.com', '127.0.0.1', 'localhost']
 
+CORS_ORIGIN_ALLOW_ALL = True
+
 
 # Application definition
 
@@ -49,6 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_mysql',
+    'corsheaders',
 
     'rest_framework',
     'simps_backend.api_v2',
@@ -56,10 +60,11 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',

@@ -1,0 +1,66 @@
+<h2 mat-dialog-title>Pasangan Detail Form</h2>
+
+<ion-content mat-dialog-content
+  class="md-dialog-container ion-padding" scrollY="false">
+  <div class="form-container">
+    <ion-avatar class="mat-elevation-z8 profile-img"
+>
+      <ion-img [src]="pasangan.avatar"></ion-img>
+    </ion-avatar>
+    <br>
+
+    <section 
+      class="mat-typography ion-text-center
+      ion-text-capitalize sub-info">
+      <h1>{{pasangan.special_name}}</h1>
+      <h3>Status: {{ pasangan.status_pasangan }}</h3>
+      <h3>Kencan Terakhir: {{ pasangan.kencan_terakhir }}</h3>
+    </section>
+
+    <form [formGroup]="pasanganFormDetail" novalidate>
+      <ion-item>
+        <ion-label position="floating">First Name</ion-label>
+        <ion-input formControlName="first_name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Last Name</ion-label>
+        <ion-input formControlName="last_name"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Special Name</ion-label>
+        <ion-input formControlName="special_name"></ion-input>
+      </ion-item>
+      <br>
+
+      <mat-form-field appearance="fill"
+        class="full-width">
+        <mat-label>Status Pasangan</mat-label>
+        <mat-select formControlName="status_pasangan_id">
+          <mat-option value="1">Pacar</mat-option>
+          <mat-option value="0">Mantan</mat-option>
+          <mat-option value="2">Selingkuhan</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      
+      <ion-row>
+        <ion-col>
+          <ion-button (click)="ubahDataPasangan()"
+            expand="block" color="secondary" 
+            [disabled]="!pasanganFormDetail.valid">
+            Ubah
+          </ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button type="sumbit" 
+            expand="block" >
+            Kencan
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+  </div>
+</ion-content>

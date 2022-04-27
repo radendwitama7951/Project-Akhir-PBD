@@ -35,7 +35,6 @@ def updateLaporanById(laporan_id, data):
     sql = open(SQLSCRIPTS_FOLDER+'/laporan_scripts/updateLaporanById.sql')
     data = list(data.values())
     data.append(laporan_id)
-    print(data)
 
     with connection.cursor() as cursor:
         cursor.execute(sql.read(), data)

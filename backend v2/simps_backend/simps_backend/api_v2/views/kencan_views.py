@@ -3,10 +3,20 @@ from django.http.response import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from simps_backend.api_v2.serializers.kencan_serializer import KencanSerializer
+from simps_backend.api_v2.serializers.kencan_serializer import KencanCreateUpdateSerializer, KencanSerializer, StatusKencanSerializer
 
-from simps_backend.api_v2.services.kencan_service import createKencan, deleteKencanById, getAllKencan, getKencanById, updateKencanById
+from simps_backend.api_v2.services.kencan_service import createKencan, deleteKencanById, getAllKencan, getAllStatusKencan, getKencanById, updateKencanById
 
+# Status KencanView
+class StatusKencanView(APIView):
+    def get(self, request, format=None):
+        try :
+            query = getAllStatusKencan() 
+            serializer = StatusKencanSerializer(query, many=True)
+        except :
+            raise Http404
+       
+        return Response(serializer.data)
 
 """
 @params APIView
@@ -25,10 +35,11 @@ class KencanView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = KencanSerializer(data=request.data)
+        serializer = KencanCreateUpdateSerializer(data=request.data)
         
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
         createKencan(serializer.data)
 
