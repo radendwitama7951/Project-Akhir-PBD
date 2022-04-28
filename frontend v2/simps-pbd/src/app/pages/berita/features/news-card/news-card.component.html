@@ -1,0 +1,11 @@
+<ion-card >
+  <ion-img [src]="dataBerita.thumbnail"></ion-img>
+  <ion-card-header>
+    <ion-card-title>{{ dataBerita.judul }}</ion-card-title>
+    <ion-card-subtitle>{{ dataBerita.tanggal }}</ion-card-subtitle>
+  </ion-card-header>
+  <ion-card-content class="ion-text-wrap">
+    {{dataBerita.deskripsi | slice:0:32}}...
+    <a [href]="dataBerita.url">baca selengkapnya</a>
+  </ion-card-content>
+</ion-card>

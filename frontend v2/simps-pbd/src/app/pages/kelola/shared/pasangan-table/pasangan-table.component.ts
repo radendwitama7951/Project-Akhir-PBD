@@ -1,5 +1,12 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { AfterViewInit, Component, Input, ViewChild } from '@angular/core';
+import {
+  OnInit,
+  AfterViewInit,
+  Component,
+  Input,
+  ViewChild,
+  OnDestroy,
+} from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -18,15 +25,17 @@ import { PasanganDetailFormComponent } from '../pasangan-detail-form/pasangan-de
   templateUrl: './pasangan-table.component.html',
   styleUrls: ['./pasangan-table.component.scss'],
 })
-export class PasanganTableComponent implements AfterViewInit {
+export class PasanganTableComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   /* @Input parameter untuk menentukan
    * ini tabel buat mantan | pacar | selingkuhan
    * */
   @Input() public statusPasangan: number | STATUS_PASANGAN = 0;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  private subscriptions!: Subscription;
-  private isHandset$!: Observable<boolean>;
+  private subscriptions: Subscription = new Subscription();
+  public isHandset$!: Observable<boolean>;
 
   dataSource: MatTableDataSource<PasanganInterface> = new MatTableDataSource(
     []
@@ -46,34 +55,39 @@ export class PasanganTableComponent implements AfterViewInit {
     this.loading$ = this._pasanganService.loading$;
 
     // this.openDetailForm(1);
-    this.subscriptions = this._pasanganService.entities$
-      .pipe(
-        map((dataPasangan: PasanganInterface[]) => {
-          return dataPasangan.filter(
-            (pasangan: PasanganInterface) =>
-              pasangan.status_pasangan_id == this.statusPasangan
-          );
-        }),
-        tap((dataPasangan: PasanganInterface[]) => {})
-      )
-      .subscribe(
-        (dataPasangan: PasanganInterface[]) => {
+    this.isHandset$ = this.breakpointObserver
+      .observe([Breakpoints.Handset])
+      .pipe(map(({ matches }) => matches));
+  }
+
+  ngOnInit(): void {
+    this.subscriptions.add(
+      this._pasanganService.entities$
+        .pipe(
+          map((dataPasangan: PasanganInterface[]) => {
+            return dataPasangan.filter(
+              (pasangan: PasanganInterface) =>
+                pasangan.status_pasangan_id == this.statusPasangan
+            );
+          }),
+          tap((dataPasangan: PasanganInterface[]) => {})
+        )
+        .subscribe((dataPasangan: PasanganInterface[]) => {
           this.dataSource.data = dataPasangan;
           setTimeout(() => {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
           }, 100);
-        },
-        () => {}
-      );
-
-    this.isHandset$ = this.breakpointObserver
-      .observe([Breakpoints.Small, Breakpoints.Handset])
-      .pipe(map(({ matches }) => matches));
+        })
+    );
   }
 
   ngAfterViewInit(): void {
     // Panggil Store Service
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
   public openDetailForm(pasangan_id: number): void {
@@ -83,6 +97,15 @@ export class PasanganTableComponent implements AfterViewInit {
       this.dialog.open(PasanganDetailFormComponent, {
         data: data,
       });
+
+    this.subscriptions.add(
+      dialogRef.afterClosed().subscribe((value: any) => {
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }, 100);
+      })
+    );
   }
 
   applyFilter(event: Event) {

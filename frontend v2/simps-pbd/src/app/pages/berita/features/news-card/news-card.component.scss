@@ -1,0 +1,23 @@
+$small: 400px;
+$medium: 680px;
+
+a {
+  color: var(--ion-color-secondary);
+}
+
+ion-card {
+  ion-img {
+    max-height: 20%;
+  }
+  @media screen and (max-width: $medium) {
+    max-width: 280px;
+    min-width: auto;
+  }
+
+  @media screen and (max-width: $small) {
+    max-width: auto;
+    min-width: 280px;
+  }
+
+  min-width: 280px;
+}

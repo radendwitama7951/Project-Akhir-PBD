@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { PacarTableComponent } from './pacar-table.component';
+import { NewsCardComponent } from './news-card.component';
 
-describe('PacarTableComponent', () => {
-  let component: PacarTableComponent;
-  let fixture: ComponentFixture<PacarTableComponent>;
+describe('NewsCardComponent', () => {
+  let component: NewsCardComponent;
+  let fixture: ComponentFixture<NewsCardComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ PacarTableComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [NewsCardComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PacarTableComponent);
+    fixture = TestBed.createComponent(NewsCardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

@@ -65,6 +65,11 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
     this.statusPasangan = this.getStatusPasangan();
   }
 
+  hapusDataPasangan(): void {
+    this._pasanganService.delete(this.pasangan.pasangan_id);
+    this.dialog.close();
+  }
+
   getStatusPasangan(): string {
     return this._pasanganService.getStatusPasangan(
       this.pasanganFormDetail.controls['status_pasangan_id'].value
