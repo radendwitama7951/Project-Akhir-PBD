@@ -13,6 +13,6 @@ export interface PasanganInterface {
   special_name: string;
   avatar: string;
   kencan_terakhir: string;
-  status_pasangan_id?: string | number | STATUS_PASANGAN;
+  status_pasangan_id?: number | STATUS_PASANGAN;
   status_pasangan?: string;
 }

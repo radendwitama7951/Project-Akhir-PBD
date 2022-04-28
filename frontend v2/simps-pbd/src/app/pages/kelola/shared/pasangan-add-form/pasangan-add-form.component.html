@@ -1,7 +1,6 @@
-<h2 mat-dialog-title>Pasangan Detail Form</h2>
-
+<h2 mat-dialog-title>Pasangan Add Form</h2>
 <ion-content mat-dialog-content
-  class="md-dialog-container ion-padding" scrollY="auto">
+  class="md-dialog-container ion-padding" scrollY="True">
   <div class="form-container">
     <ion-avatar class="mat-elevation-z8 profile-img"
 >
@@ -12,9 +11,7 @@
     <section 
       class="mat-typography ion-text-center
       ion-text-capitalize sub-info">
-      <h1>{{pasangan.special_name}}</h1>
-      <h3>Status: {{ statusPasangan }}</h3>
-      <h3>Kencan Terakhir: {{ pasangan.kencan_terakhir }}</h3>
+      <h1>Pasangan Baru</h1>
     </section>
 
     <form [formGroup]="pasanganFormDetail" novalidate>
@@ -52,16 +49,10 @@
       
       <ion-row>
         <ion-col>
-          <ion-button (click)="ubahDataPasangan()"
-            expand="block" color="secondary" 
+          <ion-button (click)="tambahDataPasangan()"
+            expand="block" color="success" 
             [disabled]="!pasanganFormDetail.valid">
-            Ubah
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button type="sumbit" 
-            expand="block" >
-            Kencan
+            Tambah
           </ion-button>
         </ion-col>
       </ion-row>

@@ -26,7 +26,7 @@ export class UserPage implements OnInit {
   ngOnInit() {}
 
   public readUser(): void {
-    this._userService.getAll().subscribe(console.log);
+    this._userService.entities$.subscribe(console.log);
   }
 
   public createUser(): void {

@@ -24,7 +24,7 @@ export const appEntityMetadata: EntityMetadataMap = {
     entityName: 'Berita',
     selectId: (berita: BeritaInterface) => berita.berita_id,
     entityDispatcherOptions: {
-      optimisticAdd: true,
+      optimisticAdd: false,
       optimisticUpdate: true,
     },
   },
@@ -32,15 +32,15 @@ export const appEntityMetadata: EntityMetadataMap = {
     entityName: 'User',
     selectId: (user: UserInterface) => user.user_id,
     entityDispatcherOptions: {
-      optimisticAdd: false,
-      optimisticUpdate: false,
+      optimisticAdd: true,
+      optimisticUpdate: true,
     },
   },
   Pasangan: {
     entityName: 'Pasangan',
     selectId: (pasangan: PasanganInterface) => pasangan.pasangan_id,
     entityDispatcherOptions: {
-      optimisticAdd: true,
+      optimisticAdd: false,
       optimisticUpdate: true,
     },
   },
@@ -57,7 +57,7 @@ export const appEntityMetadata: EntityMetadataMap = {
     entityName: 'Kencan',
     selectId: (kencan: KencanInterface) => kencan.kencan_id,
     entityDispatcherOptions: {
-      optimisticAdd: true,
+      optimisticAdd: false,
       optimisticUpdate: true,
     },
   },

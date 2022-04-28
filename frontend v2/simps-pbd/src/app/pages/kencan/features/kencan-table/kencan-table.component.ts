@@ -11,6 +11,7 @@ import { Observable, Subscription } from 'rxjs';
 import { KencanService } from 'src/app/core/services/kencan.service';
 import { PasanganService } from 'src/app/core/services/pasangan.service';
 import { PasanganInterface } from 'src/app/core/interfaces/pasangan.interface';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-kencan-table',
@@ -22,6 +23,7 @@ export class KencanTableComponent {
    * */
   private subscriptions!: Subscription;
   public loading$!: Observable<boolean>;
+  public isHandset$: Observable<boolean>;
 
   displayedColumns: string[] = ['tanggal', 'pasangan', 'tempat', 'actions'];
   dataSource: MatTableDataSource<KencanInterface> = new MatTableDataSource([]);
@@ -31,7 +33,8 @@ export class KencanTableComponent {
 
   constructor(
     private _kencanService: KencanService,
-    public _pasanganService: PasanganService
+    public _pasanganService: PasanganService,
+    private breakpointObserver: BreakpointObserver
   ) {
     this.subscriptions = this._kencanService
       .getAll()
@@ -39,11 +42,17 @@ export class KencanTableComponent {
         console.log(dataKencan);
         // Assign the data to the data source for the table to render
         this.dataSource.data = dataKencan;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        setTimeout(() => {
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        }, 100);
       });
 
     this.loading$ = this._kencanService.loading$;
+
+    this.isHandset$ = this.breakpointObserver
+      .observe([Breakpoints.Handset])
+      .pipe(map(({ matches }) => matches));
   }
 
   ngOnDestroy() {

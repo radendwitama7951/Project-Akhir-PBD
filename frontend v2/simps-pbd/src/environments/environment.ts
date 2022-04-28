@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://127.0.0.1:8000/api/v2/',
+  apiUrl: 'https://simps-api.herokuapp.com/api/v2/',
+  // apiUrl: 'http://127.0.0.1:8000/api/v2/',
 };
 
 /*

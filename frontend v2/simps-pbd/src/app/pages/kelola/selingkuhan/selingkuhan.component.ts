@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { STATUS_PASANGAN } from 'src/app/core/interfaces/pasangan.interface';
+import { PasanganAddFormComponent } from '../shared/pasangan-add-form/pasangan-add-form.component';
 
 @Component({
   selector: 'app-selingkuhan',
@@ -7,9 +9,6 @@ import { STATUS_PASANGAN } from 'src/app/core/interfaces/pasangan.interface';
   styleUrls: ['./selingkuhan.component.scss'],
 })
 export class SelingkuhanComponent implements OnInit {
-  public statusPasanganForTable: STATUS_PASANGAN = STATUS_PASANGAN.PACAR;
-
   constructor() {}
-
-  ngOnInit() {}
+  ngOnInit(): void {}
 }

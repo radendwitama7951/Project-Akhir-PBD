@@ -8,16 +8,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
-import { LayoutModule } from '@angular/cdk/layout';
 
-import { PasanganDetailFormComponent } from './pasangan-detail-form.component';
+import { PasanganAddFormComponent } from './pasangan-add-form.component';
 
 @NgModule({
-  declarations: [PasanganDetailFormComponent],
+  declarations: [PasanganAddFormComponent],
   imports: [
     CommonModule,
     IonicModule,
-    LayoutModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -27,6 +25,6 @@ import { PasanganDetailFormComponent } from './pasangan-detail-form.component';
     MatIconModule,
     MatSelectModule,
   ],
-  exports: [PasanganDetailFormComponent],
+  exports: [PasanganAddFormComponent],
 })
-export class PasanganDetailFormModule {}
+export class PasanganAddFormModule {}

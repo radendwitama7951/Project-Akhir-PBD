@@ -13,21 +13,21 @@ import { PacarModule } from './pacar/pacar.module';
 import { SelingkuhanModule } from './selingkuhan/selingkuhan.module';
 import { PasanganDetailFormModule } from './shared/pasangan-detail-form/pasangan-detail-form.module';
 import { MatDialogModule } from '@angular/material/dialog';
+import { PasanganAddFormModule } from './shared/pasangan-add-form/pasangan-add-form.module';
+import { PasanganAddFormTriggerModule } from './shared/pasangan-add-form-trigger/pasangan-add-form-trigger.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
     IonicModule,
     KelolaPageRoutingModule,
     PasanganDetailFormModule,
-    MatDialogModule,
     MatTabsModule,
     MantanModule,
     PacarModule,
     SelingkuhanModule,
+    PasanganAddFormModule,
+    PasanganAddFormTriggerModule,
   ],
   declarations: [KelolaPage],
 })
