@@ -35,8 +35,10 @@ class PasanganView(APIView):
         return Response(serializer.data)
 
     def post(self, request, format=None):
-        serializer = PasanganCreateUpdateSerializer(data=request.data)
-        
+        # updated_request = request.POST.copy()
+        updated_request = {**request.data, 'kencan_terakhir': None}
+        serializer = PasanganCreateUpdateSerializer(data=updated_request)
+ 
         if not serializer.is_valid():
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

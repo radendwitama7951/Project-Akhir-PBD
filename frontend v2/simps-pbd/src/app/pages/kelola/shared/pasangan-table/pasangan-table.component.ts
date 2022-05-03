@@ -25,9 +25,7 @@ import { PasanganDetailFormComponent } from '../pasangan-detail-form/pasangan-de
   templateUrl: './pasangan-table.component.html',
   styleUrls: ['./pasangan-table.component.scss'],
 })
-export class PasanganTableComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
+export class PasanganTableComponent implements OnInit, OnDestroy {
   /* @Input parameter untuk menentukan
    * ini tabel buat mantan | pacar | selingkuhan
    * */
@@ -56,7 +54,7 @@ export class PasanganTableComponent
 
     // this.openDetailForm(1);
     this.isHandset$ = this.breakpointObserver
-      .observe([Breakpoints.Handset])
+      .observe([Breakpoints.HandsetPortrait])
       .pipe(map(({ matches }) => matches));
   }
 
@@ -77,13 +75,9 @@ export class PasanganTableComponent
           setTimeout(() => {
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
-          }, 100);
+          }, 500);
         })
     );
-  }
-
-  ngAfterViewInit(): void {
-    // Panggil Store Service
   }
 
   ngOnDestroy(): void {
@@ -98,14 +92,10 @@ export class PasanganTableComponent
         data: data,
       });
 
-    this.subscriptions.add(
-      dialogRef.afterClosed().subscribe((value: any) => {
-        setTimeout(() => {
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        }, 100);
-      })
-    );
+    dialogRef.afterClosed().subscribe((value: any) => {
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    });
   }
 
   applyFilter(event: Event) {

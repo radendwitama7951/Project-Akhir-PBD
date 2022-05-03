@@ -1,0 +1,26 @@
+<h2>Biaya Kencan</h2>
+
+<ion-grid>
+
+  <div *ngIf="loading$ | async; else kencanBiayaForm"
+    class="loading-wrapper">
+    <ion-spinner name="circles"></ion-spinner>
+  </div>
+  <ng-template #kencanBiayaForm>
+    <ion-row>
+      <ion-item>
+        <ion-label position="fixed">Rp. </ion-label>
+        <ion-input
+          [formControl]="biayaKencanControl"
+          placeholder="cth. Rp. 50000"
+          >
+        </ion-input>
+
+        <ion-buttons slot="end">
+          <ion-button color="tertiary"
+            (click)="gantiBiayaKencan()">Ganti</ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ion-row>
+  </ng-template>
+</ion-grid>

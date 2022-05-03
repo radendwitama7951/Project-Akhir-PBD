@@ -1,0 +1,97 @@
+  <ion-header>
+    <ion-toolbar>
+      <ion-back-button defaultHref="/kencan"
+        slot="start"
+        icon="chevron-back-outline"
+        text="Kembali"></ion-back-button>
+      <h5 slot="end" class="ion-margin-horizontal">Kencan ID {{selectedKencanId}}</h5>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+  <section class="container mat-elevation-z8">
+    <mat-stepper orientation="vertical" class="MatTypography">
+      <mat-step state="pasangan" >
+        <ng-template matStepLabel>Pasangan</ng-template>
+        <ng-template matStepperIcon="pasangan">
+          <mat-icon>favorite</mat-icon>
+        </ng-template>
+        <ng-template matStepContent>
+          <app-step-one-form [selectedKencanId]="selectedKencanId"></app-step-one-form>          
+
+
+          <button mat-button matStepperNext>Next</button>
+        </ng-template>
+      </mat-step>
+
+      <mat-step state="tanggal" >
+        <ng-template matStepLabel>Tanggal dan Jam</ng-template>
+        <ng-template matStepperIcon="tanggal">
+          <mat-icon>calendar_today</mat-icon>
+        </ng-template>
+        <ng-template matStepContent>
+
+          <app-step-two-form [selectedKencanId]="selectedKencanId"></app-step-two-form>
+
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </ng-template>
+      </mat-step>
+
+      <mat-step state="tempat" >
+        <ng-template matStepLabel>Tempat</ng-template>
+        <ng-template matStepperIcon="tempat">
+          <mat-icon>location_on</mat-icon>
+        </ng-template>
+
+        <ng-template matStepContent>
+          <app-step-three-form [selectedKencanId]="selectedKencanId"></app-step-three-form>
+
+
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </ng-template>
+      </mat-step>
+
+      <mat-step state="biaya">
+        <ng-template matStepLabel>Biaya</ng-template>
+        <ng-template matStepperIcon="biaya">
+          <mat-icon>payment</mat-icon>
+        </ng-template>
+
+        <ng-template matStepContent>
+
+          <app-step-four-form [selectedKencanId]="selectedKencanId"></app-step-four-form>
+
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </ng-template>
+
+
+      </mat-step>
+
+
+      <mat-step state="status">
+        <ng-template matStepLabel>Status</ng-template>
+        <ng-template matStepperIcon="status">
+          <mat-icon>insert_chart</mat-icon>
+        </ng-template>
+
+        <ng-template matStepContent>
+
+          <app-step-five-form [selectedKencanId]="selectedKencanId"
+                     [selectedKencan$]="this._kencanService.selectEntityById(this.selectedKencanId)"></app-step-five-form>
+
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </ng-template>
+
+
+      </mat-step>
+
+    </mat-stepper>
+
+
+
+  </section>
+  </ion-content>

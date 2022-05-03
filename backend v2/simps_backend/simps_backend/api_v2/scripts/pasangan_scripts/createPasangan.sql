@@ -13,6 +13,6 @@ VALUES
     %s,
     %s,
     %s,
-    NOW(),
+    %s,
     %s
   );

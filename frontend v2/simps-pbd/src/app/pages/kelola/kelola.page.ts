@@ -10,6 +10,6 @@ export class KelolaPage implements OnInit {
   constructor(private _pasanganService: PasanganService) {}
 
   ngOnInit() {
-    this._pasanganService.getAll();
+    this._pasanganService.getAll().subscribe(console.log);
   }
 }

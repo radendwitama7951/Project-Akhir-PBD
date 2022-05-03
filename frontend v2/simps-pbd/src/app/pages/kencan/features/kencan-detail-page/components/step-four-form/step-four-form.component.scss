@@ -1,0 +1,19 @@
+ion-item {
+
+  ion-label {
+    flex: 0 0 30px;
+    width: 30px;
+    min-width: 30px;
+  }
+}
+
+
+.loading-wrapper {
+  min-width: 100%;
+  min-height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

@@ -14,9 +14,9 @@ export const pluralNames = {
 };
 
 export const defaultDataServiceConfig: DefaultDataServiceConfig = {
-  // root: environment.apiUrl,
-  root: 'https://simps-api.herokuapp.com/api/v2/',
-  timeout: 5000, // request timeout
+  root: environment.apiUrl,
+  //  root: 'https://simps-api.herokuapp.com/api/v2/',
+  timeout: 6000, // request timeout,
 };
 
 export const appEntityMetadata: EntityMetadataMap = {
@@ -38,7 +38,7 @@ export const appEntityMetadata: EntityMetadataMap = {
   },
   Pasangan: {
     entityName: 'Pasangan',
-    selectId: (pasangan: PasanganInterface) => pasangan.pasangan_id,
+    selectId: (pasangan: PasanganInterface) => pasangan.pasangan_id || 0,
     entityDispatcherOptions: {
       optimisticAdd: false,
       optimisticUpdate: true,

@@ -2,10 +2,11 @@ import { Observable } from 'rxjs';
 import { PasanganInterface } from './pasangan.interface';
 
 export enum STATUS_KENCAN {
-  TERJADWAL,
+  TERJADWAL = 0,
   BERLANGSUNG,
+  TERLAKSANA,
   BATAL,
-  SELESAI,
+  MENJADWALKAN_ULANG,
 }
 
 export interface KencanInterface {

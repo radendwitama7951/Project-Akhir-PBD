@@ -6,9 +6,7 @@
 <!-- Web Desktop Menu -->
 <ng-template #desktopMenu>
   <ion-toolbar color="medium">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
+
     <ion-title>SIMPS</ion-title>
     <ion-button slot="secondary" color="light" fill="clear"
       routerLink="user/" routerLinkActive="router-link-active">
@@ -33,13 +31,12 @@
 <!-- Mobile Menu -->
 <ng-template #mobileMenu>
   <ion-toolbar color="dark" transulucent="true">
-
     <ion-back-button
-      [disabled]="isHome()"
+      [class]="(isHome()) ? 'hidden' : ''"
       slot="start"
       color="light"
       defaultHref="/"
-      icon="chevron-back-outline"
+      icon="home-outline"
       text=""></ion-back-button>
   
     <ion-title class="ion-text-center">SIMPS</ion-title>

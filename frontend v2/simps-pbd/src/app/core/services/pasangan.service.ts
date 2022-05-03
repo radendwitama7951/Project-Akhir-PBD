@@ -31,27 +31,30 @@ export class PasanganService extends EntityCollectionServiceBase<PasanganInterfa
    *
    * */
   public post(data: PasanganInterface): void {
+    /*
     let dataSerializer: PasanganInterface = {
       pasangan_id: 0,
       first_name: '',
       last_name: '',
       special_name: '',
       avatar: '',
-      kencan_terakhir: 'belum pernah kencan',
+      kencan_terakhir: null,
       status_pasangan_id: 0,
       status_pasangan: this.getStatusPasangan(data.status_pasangan_id),
     };
-
     this.keys$.subscribe((ids: number[]) => {
       dataSerializer.pasangan_id = Math.max.apply(null, ids) + 1;
     });
+    */
 
+    this.add(data);
+    this.load();
+
+    /*
     this.httpClient
       .post(this.pasanganApiUrl, { ...dataSerializer, ...data })
-      .subscribe(console.log);
-    this.addOneToCache({ ...dataSerializer, ...data });
-    this.entities$.subscribe(console.log);
-    this.keys$.subscribe(console.log);
+      .subscribe();
+      */
   }
 
   /* @param data PasanganInterface
@@ -61,6 +64,7 @@ export class PasanganService extends EntityCollectionServiceBase<PasanganInterfa
    *
    * */
   public put(data: PasanganInterface): void {
+    /*
     let dataSerializer: PasanganInterface = {
       pasangan_id: 0,
       first_name: '',
@@ -75,8 +79,9 @@ export class PasanganService extends EntityCollectionServiceBase<PasanganInterfa
     this.keys$.subscribe((ids: number[]) => {
       dataSerializer.pasangan_id = Math.max.apply(null, ids) + 1;
     });
-
-    this.update({ ...dataSerializer, ...data });
+*/
+    this.update(data);
+    this.load();
   }
 
   /* @status Deprecated

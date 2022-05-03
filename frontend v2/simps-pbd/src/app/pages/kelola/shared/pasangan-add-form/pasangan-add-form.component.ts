@@ -42,7 +42,6 @@ export class PasanganAddFormComponent implements OnInit, OnDestroy {
       this.breakpointObserver
         .observe([Breakpoints.Small, Breakpoints.Handset])
         .subscribe(({ matches }) => {
-          console.log(matches);
           if (matches) this.dialog.updateSize('200%', '80%');
           else this.dialog.updateSize('50%', '80%');
         })

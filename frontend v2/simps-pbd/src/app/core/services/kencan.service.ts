@@ -4,7 +4,7 @@ import {
   EntityCollectionServiceBase,
 } from '@ngrx/data';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { KencanInterface } from '../interfaces/kencan.interface';
 import { PasanganInterface } from '../interfaces/pasangan.interface';
 import { PasanganService } from './pasangan.service';
@@ -21,6 +21,16 @@ export class KencanService extends EntityCollectionServiceBase<KencanInterface> 
     private serviceElementsFactory: EntityCollectionServiceElementsFactory
   ) {
     super('Kencan', serviceElementsFactory);
+  }
+
+  public selectEntityById(
+    kencanId: number | string
+  ): Observable<KencanInterface> {
+    kencanId = kencanId as number;
+    return this.entityMap$.pipe(
+      map((entities) => entities[kencanId]),
+      first()
+    );
   }
 
   getAllDenormalize(): Observable<KencanInterface[]> {

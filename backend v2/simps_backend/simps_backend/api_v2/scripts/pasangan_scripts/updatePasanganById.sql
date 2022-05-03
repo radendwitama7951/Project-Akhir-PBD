@@ -5,7 +5,7 @@ SET
     last_name = %s,
     special_name = %s,
     avatar = %s,
-    kencan_terakhir = NOW(),
+    kencan_terakhir = %s,
     status_pasangan_id = %s
 WHERE pasangan_id = %s
 LIMIT 1;

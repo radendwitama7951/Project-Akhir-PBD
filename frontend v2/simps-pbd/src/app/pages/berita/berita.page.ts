@@ -35,7 +35,6 @@ export class BeritaPage implements OnInit {
   }
 
   loadBerita(event: any): any {
-    console.log('Done');
     this.subscriptions.add(
       this.loading$.subscribe((done) => {
         event.target.complete();
@@ -44,9 +43,13 @@ export class BeritaPage implements OnInit {
 
     // App logic to determine if all data is loaded
     // and disable the infinite scroll
-    if (this.beritaService.keys.length === 1000) {
-      event.target.disabled = true;
-    }
+    this.subscriptions.add(
+      this.beritaService.keys$.subscribe((values: number[]) => {
+        if (values.length > 25) {
+          event.target.disabled = true;
+        }
+      })
+    );
   }
 
   public search(beritaId: string): void {

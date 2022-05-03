@@ -14,7 +14,7 @@ class Pasangan(models.Model):
     last_name = models.CharField(max_length=32)
     special_name = models.CharField(max_length=32)
     avatar = models.URLField()
-    kencan_terakhir = models.DateField(auto_now_add=True)
+    kencan_terakhir = models.DateField(null=True)
     status_pasangan_id = models.IntegerField(db_column="status_pasangan_id")
     status_pasangan = models.CharField(max_length=32)
     """

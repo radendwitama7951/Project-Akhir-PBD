@@ -23,13 +23,13 @@ export class AppHeaderComponent implements OnInit {
     private breakpointObserver: BreakpointObserver
   ) {
     this.isHandset$ = this.breakpointObserver
-      .observe([Breakpoints.Handset])
+      .observe([Breakpoints.HandsetPortrait])
       .pipe(map(({ matches }) => matches));
   }
 
   ngOnInit() {}
 
   isHome(): boolean {
-    return !(this.router.url == '/user');
+    return this.router.url == '/berita';
   }
 }

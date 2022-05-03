@@ -1,0 +1,14 @@
+.d-flex {
+  display: flex;
+}
+
+
+ion-item.biaya-detail {
+
+  ion-label {
+    flex: 0 0 30px;
+    width: 30px;
+    min-width: 30px;
+  }
+}
+

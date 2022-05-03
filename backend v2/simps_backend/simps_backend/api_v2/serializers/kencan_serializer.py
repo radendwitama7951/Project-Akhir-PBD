@@ -11,8 +11,8 @@ class StatusKencanSerializer(serializers.ModelSerializer):
 
 class KencanSerializer(serializers.ModelSerializer):
     kencan_id = serializers.IntegerField(read_only=False)
-    pasangan_id = serializers.IntegerField(read_only=True)
-    status_kencan_id = serializers.IntegerField(read_only=True)
+    pasangan_id = serializers.IntegerField(read_only=False)
+    status_kencan_id = serializers.IntegerField(read_only=False)
     class Meta:
         model = Kencan
         fields = '__all__'

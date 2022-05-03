@@ -1,6 +1,10 @@
-<h2 mat-dialog-title>Pasangan Add Form</h2>
+<ion-toolbar mat-dialog-title mode="md" class="ion-no-padding">
+  <ion-back-button slot="end" defaultHref="/kelola"
+    mat-dialog-close icon="close"></ion-back-button>
+  <ion-title>Pasangan Detail Form</ion-title>
+</ion-toolbar>
 <ion-content mat-dialog-content
-  class="md-dialog-container ion-padding" scrollY="True">
+  class="md-dialog-container ion-padding" scroll-y="true">
   <div class="form-container">
     <ion-avatar class="mat-elevation-z8 profile-img"
 >
@@ -11,7 +15,7 @@
     <section 
       class="mat-typography ion-text-center
       ion-text-capitalize sub-info">
-      <h1>Pasangan Baru</h1>
+      <h1>{{ pasanganFormDetail.controls['special_name'].value || 'Pasangan Baru' }}</h1>
     </section>
 
     <form [formGroup]="pasanganFormDetail" novalidate>

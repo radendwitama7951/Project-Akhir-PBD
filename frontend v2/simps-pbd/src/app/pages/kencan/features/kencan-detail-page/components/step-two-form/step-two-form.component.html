@@ -1,0 +1,68 @@
+
+<h2>Tanggal Kencan</h2>
+<ion-grid>
+
+  <div *ngIf="loading$ | async; else kencanDatetime"
+    class="loading-wrapper">
+    <ion-spinner name="circles"></ion-spinner>
+  </div>
+  <ng-template #kencanDatetime>
+    <ion-row>
+      <ion-col>
+        <ion-item button="true"
+          detail="false"
+          (click)="toggleDatePicker()">
+          <ion-label class="io-text-nowrap">Tanggal</ion-label>
+          <ion-text class="ion-text-nowrap">
+            {{ tanggalKencan | date:'mediumDate' }}   
+          </ion-text>
+        </ion-item>
+
+        <ion-datetime #kencanDate *ngIf="showDatePick"
+          [min]="minDate"
+          size="cover"
+          showDefaultButtons="true"
+          presentation="date"
+          [value]="tanggalKencan"    
+          (ionChange)="gantiTanggalKencan(kencanDate.value)"
+          (ionCancel)="showDatePick = false">
+        </ion-datetime>
+
+      </ion-col>
+
+      <ion-col >
+        <ion-item button="true"
+          detail="false"
+          (click)="toggleTimePicker()">
+          <ion-label >Jam</ion-label>
+          <ion-text>
+            {{ jamKencan | slice:0:5 }}
+          </ion-text>
+        </ion-item>
+
+        <ion-datetime #kencanTime *ngIf="showTimePick"
+          size="cover"
+          showDefaultTimeLabel="true"
+          showDefaultButtons="true"
+          hourCycle="h23"
+          presentation="time"
+          [value]="jamKencan"    
+          (ionChange)="gantiWaktuKencan(kencanTime.value)"
+          (ionCancel)="showTimePick = false">
+        </ion-datetime>
+      </ion-col>
+    </ion-row> 
+  </ng-template>
+</ion-grid>
+<!--
+<ion-row>
+  <ion-col >
+    <h4>Waktu Kencan</h4>
+    <ion-item-divider></ion-item-divider>
+    <ion-datetime locale="id-ID"
+      sizeSm="cover"
+      presentation="time"></ion-datetime>
+    <ion-item-divider></ion-item-divider>
+  </ion-col>
+</ion-row> 
+-->

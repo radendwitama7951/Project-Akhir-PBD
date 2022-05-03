@@ -1,0 +1,34 @@
+
+<h2>Tempat Kencan</h2>
+
+<ion-grid>
+
+  <div *ngIf="loading$ | async; else tempatKencanForm"
+    class="loading-wrapper">
+    <ion-spinner name="circles"></ion-spinner>
+  </div>
+
+  <ng-template #tempatKencanForm>
+    <ion-row>
+      <ion-col sizeMd="6" sizeXs="10"
+        >
+        <ion-item>
+          <ion-label position="floating">Lokasi</ion-label>
+          <ion-textarea #tempatKencanInput
+            [formControl]="tempatKencanControl"
+            autofocus="true"
+            autoGrow="true"
+              ></ion-textarea>
+
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col sizeMd="6" sizeXs="10"
+        class="ion-justify-content-end d-flex">
+        <ion-button color="tertiary"
+          (click)="gantiTempatKencan()">Ganti</ion-button>
+      </ion-col>
+    </ion-row>
+  </ng-template>
+</ion-grid>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PasanganService } from 'src/app/core/services/pasangan.service';
+import { KencanService } from 'src/app/core/services/kencan.service';
 
 @Component({
   selector: 'app-kencan',
@@ -6,10 +8,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./kencan.page.scss'],
 })
 export class KencanPage implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
+  constructor(
+    private _pasanganService: PasanganService,
+    private _kencanService: KencanService
+  ) {
+    this._kencanService.getAll();
   }
 
+  ngOnInit() {}
 }

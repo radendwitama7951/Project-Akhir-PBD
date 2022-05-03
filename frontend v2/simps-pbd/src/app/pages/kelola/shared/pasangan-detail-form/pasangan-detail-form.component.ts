@@ -1,8 +1,9 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Observable, Observer, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { PasanganInterface } from 'src/app/core/interfaces/pasangan.interface';
 import { PasanganService } from 'src/app/core/services/pasangan.service';
 
@@ -13,6 +14,7 @@ import { PasanganService } from 'src/app/core/services/pasangan.service';
 })
 export class PasanganDetailFormComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
+  public isHandset$!: Observable<boolean>;
   public pasangan!: PasanganInterface;
   public pasanganFormDetail!: FormGroup;
   public statusPasangan!: string;
@@ -25,6 +27,7 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
     private breakpointObserver: BreakpointObserver
   ) {
     this.subscriptions = this.data.subscribe((pasangan: PasanganInterface) => {
+      console.log(pasangan);
       this.pasangan = pasangan;
       this.statusPasangan = pasangan.status_pasangan;
       this.pasanganFormDetail = fb.group({
@@ -38,6 +41,10 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
         ],
       });
     });
+
+    this.isHandset$ = breakpointObserver
+      .observe([Breakpoints.Handset])
+      .pipe(map(({ matches }) => matches));
   }
 
   ngOnInit(): void {
@@ -50,7 +57,6 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
           else this.dialog.updateSize('50%', '80%');
         })
     );
-    console.log('==>', this.statusPasangan);
   }
 
   ngOnDestroy(): void {
@@ -66,7 +72,9 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
   }
 
   hapusDataPasangan(): void {
+    console.log('this id ', this.pasangan.pasangan_id);
     this._pasanganService.delete(this.pasangan.pasangan_id);
+    this._pasanganService.load();
     this.dialog.close();
   }
 
@@ -74,5 +82,9 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
     return this._pasanganService.getStatusPasangan(
       this.pasanganFormDetail.controls['status_pasangan_id'].value
     );
+  }
+
+  compareFn(e1: number, e2: number): boolean {
+    return e1 && e2 ? e1 == e2 : e1 == e2;
   }
 }

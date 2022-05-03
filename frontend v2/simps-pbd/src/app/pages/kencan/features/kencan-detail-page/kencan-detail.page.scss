@@ -1,0 +1,25 @@
+$medium: 960px;
+$small: 360px;
+
+cite {
+  font-stretch: condensed;
+  font-style: normal;
+  font-weight: bold;
+}
+
+
+.container {
+  min-height: 100%;
+  @media screen and (max-width: $medium) {
+    max-width: 100%;    
+    min-width: 0;
+  }
+
+  @media screen and (max-width: $small) {
+    min-width: 100%;    
+  }
+
+  margin-inline: auto;
+  max-width: 70%;    
+  min-width: 0;
+}

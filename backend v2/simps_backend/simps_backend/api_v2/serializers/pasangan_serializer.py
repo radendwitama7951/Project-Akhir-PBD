@@ -18,7 +18,7 @@ class PasanganSerializer(serializers.ModelSerializer):
 
 
 class PasanganCreateUpdateSerializer(serializers.ModelSerializer):
-    kencan_terakhir = serializers.DateField(read_only=True)
+    # kencan_terakhir = serializers.DateField(read_only=True)
     status_pasangan = serializers.CharField(max_length=32, read_only=True)
     class Meta:
         model = Pasangan

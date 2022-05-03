@@ -1,18 +1,24 @@
-<h2 mat-dialog-title>Pasangan Detail Form</h2>
 
+<ion-toolbar mat-dialog-title mode="md" class="ion-no-padding">
+  <ion-back-button slot="end" defaultHref="/kelola"
+    mat-dialog-close icon="close"></ion-back-button>
+  <ion-title>Pasangan Detail Form</ion-title>
+</ion-toolbar>
 <ion-content mat-dialog-content
-  class="md-dialog-container ion-padding" scrollY="auto">
+  class="md-dialog-container ion-padding">
+
+
   <div class="form-container">
     <ion-avatar class="mat-elevation-z8 profile-img"
 >
-      <ion-img [src]="pasanganFormDetail.controls['avatar'].value"></ion-img>
+      <ion-img [src]="pasanganFormDetail?.controls['avatar'].value"></ion-img>
     </ion-avatar>
     <br>
 
     <section 
       class="mat-typography ion-text-center
       ion-text-capitalize sub-info">
-      <h1>{{pasangan.special_name}}</h1>
+      <h1>{{pasanganFormDetail.controls['special_name'].value || pasangan.special_name}}</h1>
       <h3>Status: {{ statusPasangan }}</h3>
       <h3>Kencan Terakhir: {{ pasangan.kencan_terakhir }}</h3>
     </section>
@@ -42,7 +48,8 @@
       <mat-form-field appearance="fill"
         class="full-width">
         <mat-label>Status Pasangan</mat-label>
-        <mat-select formControlName="status_pasangan_id">
+        <mat-select [compareWith]="compareFn"
+          formControlName="status_pasangan_id">
           <mat-option value="1">Pacar</mat-option>
           <mat-option value="0">Mantan</mat-option>
           <mat-option value="2">Selingkuhan</mat-option>
@@ -51,20 +58,25 @@
 
       
       <ion-row class="ion-justify-content-evenly">
-        <ion-col size="2">
+        <ion-col sizeMd="2">
           <ion-button (click)="hapusDataPasangan()"
             color="danger" expand="block">
-            Hapus
+            <ion-icon name="trash-outline"
+              *ngIf="(isHandset$ | async)"            
+            ></ion-icon>
+            {{(isHandset$ | async) ? '' : 'Hapus'}}
           </ion-button>
         </ion-col>
-        <ion-col size="2">
+        <ion-col sizeMd="2">
           <ion-button (click)="ubahDataPasangan()"
-            color="secondary"  expand="block" 
+            color="secondary" expand="block" 
             [disabled]="!pasanganFormDetail.valid">
-            Ubah
+            <ion-icon name="create-outline"
+              *ngIf="(isHandset$ | async)"></ion-icon>
+            {{(isHandset$ | async) ? '' : 'Simpan'}}
           </ion-button>
         </ion-col>
-        <ion-col offset="3">
+        <ion-col offsetMd="3">
           <ion-button expand="block" type="sumbit">
             Kencan
           </ion-button>

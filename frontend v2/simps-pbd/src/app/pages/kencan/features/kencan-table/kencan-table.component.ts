@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
@@ -12,13 +12,14 @@ import { KencanService } from 'src/app/core/services/kencan.service';
 import { PasanganService } from 'src/app/core/services/pasangan.service';
 import { PasanganInterface } from 'src/app/core/interfaces/pasangan.interface';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-kencan-table',
   templateUrl: './kencan-table.component.html',
   styleUrls: ['./kencan-table.component.scss'],
 })
-export class KencanTableComponent {
+export class KencanTableComponent implements OnInit, OnDestroy {
   /* @Entity config
    * */
   private subscriptions!: Subscription;
@@ -34,29 +35,35 @@ export class KencanTableComponent {
   constructor(
     private _kencanService: KencanService,
     public _pasanganService: PasanganService,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    public router: Router
   ) {
-    this.subscriptions = this._kencanService
-      .getAll()
-      .subscribe((dataKencan: KencanInterface[]) => {
-        console.log(dataKencan);
+    this.subscriptions = this._kencanService.entities$.subscribe(
+      (dataKencan: KencanInterface[]) => {
         // Assign the data to the data source for the table to render
         this.dataSource.data = dataKencan;
         setTimeout(() => {
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         }, 100);
-      });
+      }
+    );
 
     this.loading$ = this._kencanService.loading$;
 
     this.isHandset$ = this.breakpointObserver
-      .observe([Breakpoints.Handset])
+      .observe([Breakpoints.HandsetPortrait])
       .pipe(map(({ matches }) => matches));
   }
 
-  ngOnDestroy() {
+  ngOnInit(): void { }
+
+  ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+  }
+
+  openKencanDetail(kencanId: number): void {
+    this.router.navigate(['kencan', kencanId]);
   }
 
   applyFilter(event: Event) {

@@ -35,7 +35,7 @@ APPEND_SLASH = False
 SECRET_KEY = 'django-insecure-gmcp*0*@_vp42%d3-az7y$4@bes4hprpby8d_rb8gmwbnh)u(1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 # ALLOWED_HOSTS = ['0.0.0.0']
 ALLOWED_HOSTS = ['simps-api.herokuapp.com', '127.0.0.1', 'localhost']
 

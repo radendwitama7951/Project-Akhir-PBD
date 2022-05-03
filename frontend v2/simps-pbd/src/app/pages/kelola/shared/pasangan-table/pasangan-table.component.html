@@ -20,7 +20,7 @@
       <!-- Progress Column -->
       <ng-container matColumnDef="kencan_terakhir">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Kencan Terakhir </th>
-        <td mat-cell *matCellDef="let row"> {{row.kencan_terakhir}} </td>
+        <td mat-cell *matCellDef="let row"> {{row.kencan_terakhir || 'Belum pernah kencan'}} </td>
       </ng-container>
 
       <!-- Fruit Column -->
@@ -28,7 +28,8 @@
         <th mat-header-cell *matHeaderCellDef> Detail </th>
         <td mat-cell *matCellDef="let row">
           <ion-button (click)="openDetailForm(row.pasangan_id)"
-            color="secondary" size="small">
+            color="secondary" 
+            [size]="(isHandset$ | async) ? 'small' : 'default'">
             <ion-icon name="information-circle-outline"></ion-icon>
             <ng-container *ngIf="!(isHandset$ | async)">
               Detail

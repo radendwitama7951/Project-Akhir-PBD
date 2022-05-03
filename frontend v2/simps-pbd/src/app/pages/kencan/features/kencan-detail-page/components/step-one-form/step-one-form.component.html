@@ -1,0 +1,66 @@
+<h2>Pasangan Kencan</h2>
+
+
+<div *ngIf="loading$ | async; else pasanganForm"
+  class="loading-wrapper">
+  <ion-spinner name="circles"></ion-spinner>
+
+  <blockquote>
+      <p>
+        "Ambil sebisanya, kerahkan semua tenaga"
+      </p>
+  </blockquote>
+</div>
+
+<ng-template #pasanganForm>
+  <form>
+    <ion-row>
+      <ion-col>
+        <ion-item lines="none"
+          class="ion-no-padding ion-no-margin">
+          <ion-avatar slot="start">
+            <ion-img 
+              [src]="(selectedPasangan$ | async)?.avatar"></ion-img>
+          </ion-avatar>
+          <ion-label>
+            <h1>
+              {{ (selectedPasangan$ | async)?.special_name }}
+              <ion-badge >
+                {{ (selectedPasangan$ | async)?.status_pasangan}}
+              </ion-badge>
+            </h1>
+            <h2> 
+              {{ (selectedPasangan$ | async)?.first_name  }} 
+              {{ (selectedPasangan$ | async)?.last_name  }} 
+            </h2>
+            <h4>Terakhir Kencan: {{ (selectedPasangan$ | async)?.kencan_terakhir }} </h4>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="6">
+        <ion-item>
+          <ion-label position="floating">Pasangan</ion-label>
+          <ion-select [compareWith]="compareFn"
+            [formControl]="pasanganIdControl">
+            <ion-select-option 
+              *ngFor="let opsi of (dataPasangan$ | async)"
+              [value]="opsi.pasangan_id">
+              {{ opsi.first_name + ' ' + opsi.last_name }}
+            </ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+
+      <ion-col offset="3" [size]="3"
+        class="ion-justify-items-center">
+        <ion-button color="tertiary" expand="block"
+          (click)="updateSelectedKencan()">Ganti</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ng-template>
+
