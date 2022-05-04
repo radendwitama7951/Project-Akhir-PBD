@@ -9,14 +9,14 @@ export enum STATUS_KENCAN {
   MENJADWALKAN_ULANG,
 }
 
-export interface KencanInterface {
-  kencan_id?: number;
+export class KencanInterface {
+  readonly kencan_id?: number;
   tanggal: string;
   jam: string;
   tempat: string;
   pasangan_id?: string | number;
-  pasangan?: string;
+  readonly pasangan?: string;
   biaya: number;
   status_kencan_id?: number | STATUS_KENCAN;
-  status_kencan?: string;
+  readonly status_kencan?: string;
 }

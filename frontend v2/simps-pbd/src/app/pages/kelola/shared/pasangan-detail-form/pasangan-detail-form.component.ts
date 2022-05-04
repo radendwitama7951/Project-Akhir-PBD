@@ -2,6 +2,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Observable, Observer, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PasanganInterface } from 'src/app/core/interfaces/pasangan.interface';
@@ -24,7 +25,8 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
     private dialog: MatDialogRef<PasanganDetailFormComponent>,
     private _pasanganService: PasanganService,
     private fb: FormBuilder,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    private router: Router
   ) {
     this.subscriptions = this.data.subscribe((pasangan: PasanganInterface) => {
       console.log(pasangan);
@@ -82,6 +84,11 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
     return this._pasanganService.getStatusPasangan(
       this.pasanganFormDetail.controls['status_pasangan_id'].value
     );
+  }
+
+  openKencanCreatePage(): void {
+    this.router.navigate(['kencan/create-kencan/', this.pasangan.pasangan_id]);
+    this.dialog.close();
   }
 
   compareFn(e1: number, e2: number): boolean {

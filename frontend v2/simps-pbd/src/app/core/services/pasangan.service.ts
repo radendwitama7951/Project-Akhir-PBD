@@ -105,7 +105,10 @@ export class PasanganService extends EntityCollectionServiceBase<PasanganInterfa
    * ambil data pasangan dari cache
    *
    * */
-  public selectEntityById(pasangan_id: number): Observable<PasanganInterface> {
+  public selectEntityById(
+    pasangan_id: number | string
+  ): Observable<PasanganInterface> {
+    pasangan_id = pasangan_id as number;
     return this.entityMap$.pipe(
       map((entities) => entities[pasangan_id]),
       first()

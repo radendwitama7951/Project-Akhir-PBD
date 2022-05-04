@@ -9,6 +9,13 @@ const routes: Routes = [
     component: KencanPage,
   },
   {
+    path: 'create-kencan/:pasanganId',
+    loadChildren: () =>
+      import('./features/kencan-create/kencan-create.module').then(
+        (m) => m.KencanCreatePageModule
+      ),
+  },
+  {
     path: ':kencanId',
     loadChildren: () =>
       import('./features/kencan-detail-page/kencan-detail.module').then(

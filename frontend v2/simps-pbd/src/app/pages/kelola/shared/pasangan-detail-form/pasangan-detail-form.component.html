@@ -67,6 +67,7 @@
             {{(isHandset$ | async) ? '' : 'Hapus'}}
           </ion-button>
         </ion-col>
+
         <ion-col sizeMd="2">
           <ion-button (click)="ubahDataPasangan()"
             color="secondary" expand="block" 
@@ -76,8 +77,10 @@
             {{(isHandset$ | async) ? '' : 'Simpan'}}
           </ion-button>
         </ion-col>
+
         <ion-col offsetMd="3">
-          <ion-button expand="block" type="sumbit">
+          <ion-button expand="block" 
+            (click)="openKencanCreatePage()">
             Kencan
           </ion-button>
         </ion-col>

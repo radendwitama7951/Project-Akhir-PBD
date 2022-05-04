@@ -1,16 +1,90 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>user</ion-title>
+    <ion-back-button defaultHref="/kelola"
+      slot="start"
+      icon="chevron-back-outline"
+      text="Kembali"></ion-back-button>
+    <h5 slot="primary" class="ion-margin-horizontal">
+      User ID {{ (activeUser$ | async)?.user_id }}
+    </h5>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <ion-button (click)="createUser()">
-    create
-  </ion-button>
 
-  <ion-button (click)="readUser()">
-    read
-  </ion-button>
+<ion-content>
+  
+  <div *ngIf="loading$ | async; else userDetailForm"
+    class="loading-wrapper">
+    <ion-spinner name="circles"></ion-spinner>
+  </div>
+
+  <ng-template #userDetailForm>
+    <section class="ion-padding container mat-elevation-z8">
+      <ion-avatar class="m-inline"> 
+        <ion-img src="https://lh3.googleusercontent.com/ogw/ADea4I6kj6Zm3t1wGInrp3koFYYL7nMC0r8jMJc7sP3WHg=s32-c-mo"></ion-img>
+      </ion-avatar>
+
+      <form [formGroup]="activeUserDetailForm">
+        <ion-item-group>
+          <ion-item lines="none">
+            <ion-label slot="start" position="fixed">Last Login</ion-label>
+              {{ (activeUser$ | async)?.last_login  | date: 'medium'}}
+          </ion-item>
+
+          <ion-list class="namefield">
+            <ion-row>
+                <ion-col>
+                  <ion-item>
+                    <ion-icon slot="start" name="person-outline"></ion-icon>
+                    <ion-label position="floating">Firstname</ion-label>
+                    <ion-input formControlName="first_name"
+                      placeholder="Masukan nama depan anda"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item>
+                    <ion-label position="floating">Lastname</ion-label>
+                    <ion-input formControlName="last_name"
+                      placeholder="Masukan nama belakang anda"></ion-input>
+                  </ion-item>
+                </ion-col>
+            </ion-row>
+          </ion-list>
+
+          <ion-item>
+            <ion-icon slot="start" name="mail-outline"></ion-icon>
+            <ion-label position="floating">Email</ion-label>
+            <ion-input formControlName="email"
+              placeholder="cth. contoh@email.com"></ion-input>
+          </ion-item>
+          <ion-item class="password-field">
+            <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
+            <ion-label position="floating">Password</ion-label>
+            <ion-input formControlName="password"
+              [type]="showPassword ? 'text' : 'password' " 
+              clearOnEdit="false"
+              placeholder="Masukan karakter dan angka"></ion-input>
+
+            <ion-button (click)="onPasswordToggle()"
+              fill="clear"
+              size="small"
+              slot="end"
+              class="ion-align-self-center"
+              >
+              <ion-icon slot="icon-only" [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+            </ion-button>
+
+          </ion-item>
+        </ion-item-group>
+      </form>
+      <br>
+      <ion-item lines="none">
+        <ion-button (click)="simpanUserDetail()"
+          size="default"
+          slot="end"
+          color="tertiary">Simpan</ion-button>
+      </ion-item>
+    </section>
+  </ng-template>
 
 </ion-content>

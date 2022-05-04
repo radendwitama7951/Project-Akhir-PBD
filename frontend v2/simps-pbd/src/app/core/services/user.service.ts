@@ -7,7 +7,8 @@ import {
 import { EntityCollectionService } from '@ngrx/data';
 import { UserInterface } from '../interfaces/user.interface';
 import { environment } from 'src/environments/environment';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +48,13 @@ export class UserService extends EntityCollectionServiceBase<UserInterface> {
         this.addOneToCache({ ...templateData, ...data });
       });
       */
+  }
+
+  public selectEntityById(user_id: number | string): Observable<UserInterface> {
+    user_id = user_id as number;
+    return this.entityMap$.pipe(
+      map((entities) => entities[user_id]),
+      first()
+    );
   }
 }

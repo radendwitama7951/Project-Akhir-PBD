@@ -30,7 +30,7 @@ export const appEntityMetadata: EntityMetadataMap = {
   },
   User: {
     entityName: 'User',
-    selectId: (user: UserInterface) => user.user_id,
+    selectId: (user: UserInterface) => user.user_id || 0,
     entityDispatcherOptions: {
       optimisticAdd: true,
       optimisticUpdate: true,
@@ -55,7 +55,7 @@ export const appEntityMetadata: EntityMetadataMap = {
   },
   Kencan: {
     entityName: 'Kencan',
-    selectId: (kencan: KencanInterface) => kencan.kencan_id,
+    selectId: (kencan: KencanInterface) => kencan.kencan_id || 0,
     entityDispatcherOptions: {
       optimisticAdd: false,
       optimisticUpdate: true,
