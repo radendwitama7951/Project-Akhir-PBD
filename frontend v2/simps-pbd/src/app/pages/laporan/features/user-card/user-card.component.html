@@ -1,0 +1,20 @@
+
+<ion-item lines="none"
+  class="ion-no-padding ion-no-margin">
+
+  <ion-avatar slot="start">
+    <ion-img 
+      src="https://lh3.googleusercontent.com/ogw/ADea4I6kj6Zm3t1wGInrp3koFYYL7nMC0r8jMJc7sP3WHg=s32-c-mo">
+    </ion-img>
+  </ion-avatar>
+  <ion-label>
+    <h1>
+      User
+    </h1>
+    <h2> 
+      {{ (activeUser$ | async)?.first_name  }} 
+      {{ (activeUser$ | async)?.last_name  }} 
+    </h2>
+    <h4>Last Login: {{ (activeUser$ | async)?.last_login | date: 'short' }} </h4>
+  </ion-label>
+</ion-item>

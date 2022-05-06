@@ -29,6 +29,7 @@ export class UserService extends EntityCollectionServiceBase<UserInterface> {
       first_name: '',
       last_name: '',
       password: '',
+      avatar: '',
       last_login: '',
     };
 

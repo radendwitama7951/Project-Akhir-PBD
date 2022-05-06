@@ -1,7 +1,62 @@
-.container {
-  background-color: #fff;
-  position: relative;
-  margin-inline: auto;
-  width: 210mm;
-  height: 297mm;
+$large: 1500px;
+$medium: 960px;
+$small: 360px;
+
+ion-row {
+  padding-bottom: 36pt;
 }
+
+ion-title {
+  padding: 0;
+}
+
+.loading-wrapper {
+  min-width: 100%;
+  min-height: 100px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.container {
+  min-height: 100%;
+  @media screen and (max-width: $large) {  
+    margin-inline: auto;
+    max-width: 70%;    
+    min-width: 0;
+  }
+  @media screen and (max-width: $medium) {
+    max-width: 100%;    
+    min-width: 0;
+  }
+
+  @media screen and (max-width: $small) {
+    min-width: 100%;    
+  }
+
+
+  margin-inline: auto;
+  max-width: 60%;    
+  min-width: 0;
+}
+
+.m-inline {
+  margin-inline: auto;
+}
+
+.d-flex {
+  display: flex;
+}
+
+
+.d-block {
+  display: block;
+}
+
+.p-20 {
+  padding-inline: 20px;
+}
+

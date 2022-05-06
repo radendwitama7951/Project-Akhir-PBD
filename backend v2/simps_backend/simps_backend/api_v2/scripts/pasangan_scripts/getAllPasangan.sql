@@ -9,4 +9,5 @@ select
   api_v2_statuspasangan.keterangan as status_pasangan
 from api_v2_pasangan
   join api_v2_statuspasangan
-    using (status_pasangan_id);
+    using (status_pasangan_id)
+ORDER BY api_v2_pasangan.special_name;

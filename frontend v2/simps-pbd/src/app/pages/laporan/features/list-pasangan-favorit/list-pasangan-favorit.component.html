@@ -1,0 +1,25 @@
+
+
+<ion-item-group class="ion-margin-vertical">
+  <ion-item *ngFor="let pasangan of (pasanganData$ | async)!" class="ion-no-padding">
+    <ion-avatar slot="start">
+      <ion-img [src]="pasangan.avatar"></ion-img>
+    </ion-avatar>
+
+    <ion-label>
+      <ion-label color="primary"> 
+        {{ pasangan.status_pasangan }}
+      </ion-label>
+      {{ pasangan.first_name }} {{ pasangan.last_name }}
+    </ion-label>
+
+
+    <ion-label class="ion-text-end ion-no-padding" >
+      <ion-label color="primary">
+        total kencan
+      </ion-label>
+      69
+    </ion-label>
+
+  </ion-item>
+</ion-item-group>

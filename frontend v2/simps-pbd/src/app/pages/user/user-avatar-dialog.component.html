@@ -1,0 +1,18 @@
+<h4 matDialogTitle>Avatar URL</h4>
+<section matDialogContent class="user-avatar-dialog">
+  <ion-item>
+    <ion-label position="floating">
+      Avatar
+    </ion-label>
+    <ion-textarea autoGrow="true" autofocus="true" [formControl]="userAvatarControl"></ion-textarea>
+  </ion-item>
+  <ion-col class="dialog-action-button">
+    <ion-buttons matDialogActions>
+      <ion-button matDialogClose>Kembali</ion-button>
+      <ion-button 
+        [disabled]="!userAvatarControl.valid"
+        color="tertiary"
+        [matDialogClose]="userAvatarControl.value" >Ganti</ion-button>
+    </ion-buttons>
+  </ion-col>
+</section>

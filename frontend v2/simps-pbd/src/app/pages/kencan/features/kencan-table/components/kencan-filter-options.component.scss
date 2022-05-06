@@ -1,0 +1,26 @@
+
+ion-grid {
+  --ion-grid-width: 280px;
+  --ion-grid-height: 720px;
+}
+
+.container {
+  min-height: 360px;
+}
+
+
+.d-flex {
+  display: flex;
+}
+
+.mat-dialog-title {
+  margin: 0;
+  display: block;
+  width: 100%;
+}
+
+.close-button {
+  left: 70%;
+  top: -5px;
+  align-self: start;
+}

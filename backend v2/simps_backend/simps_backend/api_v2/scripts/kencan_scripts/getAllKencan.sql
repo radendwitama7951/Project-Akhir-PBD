@@ -12,4 +12,5 @@ FROM api_v2_kencan
 JOIN api_v2_statuskencan
   USING (status_kencan_id)
 JOIN api_v2_pasangan
-  USING (pasangan_id);
+  USING (pasangan_id)
+ORDER BY api_v2_kencan.tanggal;

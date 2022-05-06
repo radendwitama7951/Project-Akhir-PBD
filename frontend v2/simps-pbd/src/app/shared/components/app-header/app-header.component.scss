@@ -10,6 +10,10 @@ ion-accordion {
   }
 }
 
+.router-link-active {
+  color: var(--ion-color-light-shade);
+}
+
 
 .hidden {
   visibility: hidden;

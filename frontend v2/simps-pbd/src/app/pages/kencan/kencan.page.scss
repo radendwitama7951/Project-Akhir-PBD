@@ -1,0 +1,11 @@
+
+$medium: 1000px;
+$small: 600px;
+
+.kencan-table-margin {
+  @media screen and (max-width: $medium) {
+    margin: 0;
+    
+  }
+  margin: auto 8rem;
+}

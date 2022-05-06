@@ -11,8 +11,7 @@
 </ion-header>
 
 
-<ion-content>
-  
+<ion-content> 
   <div *ngIf="loading$ | async; else userDetailForm"
     class="loading-wrapper">
     <ion-spinner name="circles"></ion-spinner>
@@ -20,9 +19,17 @@
 
   <ng-template #userDetailForm>
     <section class="ion-padding container mat-elevation-z8">
-      <ion-avatar class="m-inline"> 
-        <ion-img src="https://lh3.googleusercontent.com/ogw/ADea4I6kj6Zm3t1wGInrp3koFYYL7nMC0r8jMJc7sP3WHg=s32-c-mo"></ion-img>
-      </ion-avatar>
+      <div class="user-avatar">
+        <ion-avatar class="m-inline" > 
+          <ion-img [src]="(activeUser$ | async)?.avatar"></ion-img>
+        </ion-avatar>
+        <ion-buttons >
+          <ion-button (click)="openUserAvatarDialog()"
+            fill="clear" slot="icon-only" shape="round">
+            <ion-icon name="create-outline" ></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </div>
 
       <form [formGroup]="activeUserDetailForm">
         <ion-item-group>
@@ -57,6 +64,7 @@
             <ion-input formControlName="email"
               placeholder="cth. contoh@email.com"></ion-input>
           </ion-item>
+
           <ion-item class="password-field">
             <ion-icon slot="start" name="lock-closed-outline"></ion-icon>
             <ion-label position="floating">Password</ion-label>
@@ -80,6 +88,7 @@
       <br>
       <ion-item lines="none">
         <ion-button (click)="simpanUserDetail()"
+          [disabled]="!activeUserDetailForm.valid"
           size="default"
           slot="end"
           color="tertiary">Simpan</ion-button>

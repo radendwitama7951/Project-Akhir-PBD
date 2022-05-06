@@ -6,6 +6,7 @@ class User (models.Model):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     password = models.CharField(max_length=128)
+    avatar = models.URLField()
     last_login = models.DateTimeField(auto_now_add=True)
      
     def __str__(self):

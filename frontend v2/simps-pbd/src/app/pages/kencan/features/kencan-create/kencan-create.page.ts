@@ -7,6 +7,9 @@ import { KencanService } from 'src/app/core/services/kencan.service';
 import { PasanganService } from 'src/app/core/services/pasangan.service';
 import { parseISO, format } from 'date-fns';
 import * as moment from 'moment';
+import { StepperOrientation } from '@angular/cdk/stepper';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-kencan-create',
@@ -17,6 +20,7 @@ export class KencanCreatePage implements OnInit, OnDestroy {
   private subscriptions: Subscription = new Subscription();
   public selectedPasangan$: Observable<PasanganInterface>;
   public dataPasangan$!: Observable<PasanganInterface[]>;
+  public stepperOrientation$!: Observable<StepperOrientation>;
   public selectedPasanganId!: string;
   public minDate = moment().format();
 
@@ -26,8 +30,13 @@ export class KencanCreatePage implements OnInit, OnDestroy {
     public _kencanService: KencanService,
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
-    private router: Router
-  ) {}
+    private router: Router,
+    private breakpointObserver: BreakpointObserver
+  ) {
+    this.stepperOrientation$ = breakpointObserver
+      .observe([Breakpoints.HandsetPortrait, Breakpoints.Small])
+      .pipe(map(({ matches }) => (matches ? 'vertical' : 'horizontal')));
+  }
 
   ngOnInit(): void {
     this.selectedPasanganId =

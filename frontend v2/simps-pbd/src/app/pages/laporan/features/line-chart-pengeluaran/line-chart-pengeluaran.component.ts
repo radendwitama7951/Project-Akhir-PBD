@@ -1,5 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ChartConfiguration, ChartEvent, ChartType } from 'chart.js';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
@@ -10,6 +13,7 @@ import { BaseChartDirective } from 'ng2-charts';
 export class LineChartPengeluaranComponent {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
   public lineChartType: ChartType = 'line';
+  public chartAspectRatioY$!: Observable<number>;
   private datasource: Array<number> = [...Array(31).keys()] as Array<number>;
 
   public lineChartData: ChartConfiguration['data'] = {
@@ -20,7 +24,7 @@ export class LineChartPengeluaranComponent {
         fill: 'origin',
       },
     ],
-    labels: [...Array(31).keys()],
+    labels: [...Array(31).keys()].map((tanggal: number) => tanggal + 1),
   };
 
   public lineChartOptions: ChartConfiguration['options'] = {
@@ -47,7 +51,11 @@ export class LineChartPengeluaranComponent {
     },
   };
 
-  constructor() {
+  constructor(private breakpointObserver: BreakpointObserver) {
+    this.chartAspectRatioY$ = this.breakpointObserver
+      .observe([Breakpoints.HandsetPortrait])
+      .pipe(map(({ matches }) => (matches ? 2 : 1)));
+
     this.datasource.forEach((el: number) => el * 12000);
   }
 }

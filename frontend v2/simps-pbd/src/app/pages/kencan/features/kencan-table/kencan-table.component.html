@@ -1,7 +1,15 @@
-<mat-form-field appearance="standard">
-  <mat-label>Filter</mat-label>
-  <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-</mat-form-field>
+<ion-row>
+  <ion-col sizeLg="6" sizeMd="8" >
+      <mat-form-field appearance="standard">
+        <mat-label>Search</mat-label>
+        <input matInput placeholder="Ex. Mia" #searchInput>
+
+        <button mat-icon-button matSuffix (click)="openFilterOptions()">
+          <mat-icon>filter_list</mat-icon>
+        </button>
+      </mat-form-field>
+  </ion-col>
+</ion-row>
 
 <div *ngIf="loading$ | async; else kencanTable"
   class="loading-wrapper mat-elevation-z8">

@@ -36,6 +36,7 @@ export class StepFiveFormComponent implements OnInit, OnDestroy {
   public opsiStatusKencan: string[] = [
     'Terjadwal',
     'Berlangsung',
+    'Terlaksana',
     'Batal',
     'Menjadwalkan Ulang',
   ];

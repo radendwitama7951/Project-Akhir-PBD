@@ -9,10 +9,13 @@
 </ion-header>
 
 <ion-content>
-  <section class="container mat-elevation-z8">
+  <section class="container mat-elevation-z8 container">
     <form [formGroup]="createKencanForm">
-      <mat-stepper orientation="horizontal" class="MatTypography">
-
+      <mat-stepper 
+        [orientation]="(stepperOrientation$ | async)!" 
+        class="MatTypography"
+        linear="false"
+        >
           <mat-step state="pasangan" [stepControl]="createKencanForm.controls['pasangan_id']" 
             errorMessage="Field wajib diisi !">
 
@@ -21,11 +24,12 @@
                 <mat-icon>favorite</mat-icon>
               </ng-template>
 
-              <ng-template matStepContent>    
+              <ng-template matStepContent>
+                <ion-title>Pasangan Kencan</ion-title>
 
                 <ion-grid>
                   <ion-row>
-                    <ion-col>
+                    <ion-col sizeLg="6" sizeMd="8">
                       <ion-item lines="none">
                         <ion-avatar slot="start">
                           <ion-img [src]="(selectedPasangan$ | async)?.avatar"></ion-img>
@@ -35,6 +39,7 @@
                           <h4>Terakhir Kencan : {{(selectedPasangan$ | async)?.kencan_terakhir}}</h4>
                         </ion-label>
                       </ion-item>
+                      
                       <ion-item>
                         <ion-label position="floating">Pasangan</ion-label>
                         <ion-select [compareWith]="compareFn"
@@ -67,6 +72,7 @@
             </ng-template>
             <ng-template matStepContent>
 
+              <ion-title>Waktu Kencan</ion-title>
               <ion-datetime #kencanDate
                 presentation="time-date"
                 [min]="minDate"
@@ -119,6 +125,7 @@
 
             <ng-template matStepContent>
 
+              <ion-title>Tempat Kencan</ion-title>
               <ion-row>
                 <ion-item class="biaya">
                   <ion-label position="fixed">Rp. </ion-label>
@@ -147,65 +154,77 @@
 
             <ng-template matStepContent>
 
-                    <ion-grid>
-                      <ion-row class="ion-justify-content-center d-flex">
-                          <ion-col>
-                            <ion-item lines="none"
-                              class="ion-no-padding ion-no-margin">
-                              <ion-avatar slot="start">
-                                <ion-img 
-                                  [src]="(selectedPasangan$ | async)?.avatar"></ion-img>
-                              </ion-avatar>
-                              <ion-label>
-                                <h1>
-                                  {{ (selectedPasangan$ | async)?.special_name }}
-                                  <ion-badge >
-                                    {{ (selectedPasangan$ | async)?.status_pasangan}}
-                                  </ion-badge>
-                                </h1>
-                                <h2> 
-                                  {{ (selectedPasangan$ | async)?.first_name  }} 
-                                  {{ (selectedPasangan$ | async)?.last_name  }} 
-                                </h2>
-                                <h4>Terakhir Kencan: {{ (selectedPasangan$ | async)?.kencan_terakhir }} </h4>
-                              </ion-label>
-                            </ion-item>
+              <ion-title>Overview</ion-title>
+              <ion-grid>
+                <ion-row class="ion-justify-content-center d-flex">
+                    <ion-col>
+                      <ion-item lines="none"
+                        class="ion-no-padding ion-no-margin">
+                        <ion-avatar slot="start">
+                          <ion-img 
+                            [src]="(selectedPasangan$ | async)?.avatar"></ion-img>
+                        </ion-avatar>
+                        <ion-label>
+                          <h1>
+                            {{ (selectedPasangan$ | async)?.special_name }}
+                            <ion-badge >
+                              {{ (selectedPasangan$ | async)?.status_pasangan}}
+                            </ion-badge>
+                          </h1>
+                          <h2> 
+                            {{ (selectedPasangan$ | async)?.first_name }} 
+                            {{ (selectedPasangan$ | async)?.last_name  }} 
+                          </h2>
+                          <h4>Terakhir Kencan: {{ (selectedPasangan$ | async)?.kencan_terakhir }} </h4>
+                        </ion-label>
+                      </ion-item>
 
-                            <ion-item>
-                              <ion-icon name="calendar-clear-outline" slot="start"></ion-icon>
-                              <ion-text>{{ createKencanForm.controls['tanggal'].value }}</ion-text>
-                            </ion-item>
+                      <ion-item>
+                        <ion-icon name="calendar-clear-outline" slot="start"></ion-icon>
+                        <ion-text [color]="(createKencanForm.controls['jam'].valid) ? 'dark' : 'danger'">
+                          {{ createKencanForm.controls['tanggal'].value || 'Tanggal kencan belum diatur !' }}
+                        </ion-text>
+                      </ion-item>
 
-                            <ion-item>
-                              <ion-icon name="time-outline" slot="start"></ion-icon>
-                              <ion-text>{{ createKencanForm.controls['jam'].value}}</ion-text>
-                            </ion-item>
+                      <ion-item>
+                        <ion-icon name="time-outline" slot="start"></ion-icon>
+                        <ion-text [color]="(createKencanForm.controls['jam'].valid) ? 'dark' : 'danger'">
+                          {{ createKencanForm.controls['jam'].value || 'Jam kencan belum diatur !'}}
+                        </ion-text>
+                      </ion-item>
 
-                            <ion-item>
-                              <ion-icon name="location-outline" slot="start"></ion-icon>
-                              <ion-text>{{ createKencanForm.controls['tempat'].value }}</ion-text>
-                            </ion-item>
+                      <ion-item>
+                        <ion-icon name="location-outline" slot="start"></ion-icon>
+                        <ion-text [color]="(createKencanForm.controls['tempat'].valid) ? 'dark' : 'danger'">
+                          {{ createKencanForm.controls['tempat'].value || 'Tempat kencan belum diatur !'}}
+                        </ion-text>
+                      </ion-item>
 
-                            <ion-item class="biaya" lines="full">
-                              <ion-icon name="card-outline" slot="start"></ion-icon>
-                                <ion-label position="fixed">Rp.</ion-label>
-                                {{ createKencanForm.controls['biaya'].value }}
-                            </ion-item>
+                      <ion-item class="biaya" lines="full">
+                        <ion-icon name="card-outline" slot="start"></ion-icon>
+                          <ion-label *ngIf="(createKencanForm.controls['biaya'].valid && createKencanForm.controls['biaya'].value)"
+                            position="fixed"
+                          >Rp.</ion-label>
+                          <ion-text [color]="(createKencanForm.controls['biaya'].valid && createKencanForm.controls['biaya'].value) ? 'dark' : 'danger'">
+                            {{ createKencanForm.controls['biaya'].value || 'Biaya kencan belum diatur !'}}
+                          </ion-text>
+                      </ion-item>
 
-                            <ion-item>
-                              <ion-label position="floating">Status Kencan</ion-label>
-                              <ion-select #kencanStatusOption interface="popover"
-                                [compareWith]="compareFn"
-                                formControlName="status_kencan_id">
-                                <ion-select-option [value]="0">Terjadwal</ion-select-option>
-                                <ion-select-option [value]="1">Berlangsung</ion-select-option>
-                                <ion-select-option [value]="3">Menjadwalkan Ulang</ion-select-option>
-                                <ion-select-option [value]="2">Batal</ion-select-option>
-                              </ion-select>
-                            </ion-item>
-                          </ion-col>
-                      </ion-row>
-                    </ion-grid>
+                      <ion-item>
+                        <ion-label position="floating">Status Kencan</ion-label>
+                        <ion-select #kencanStatusOption interface="popover"
+                          [compareWith]="compareFn"
+                          formControlName="status_kencan_id">
+                          <ion-select-option [value]="0">Terjadwal</ion-select-option>
+                          <ion-select-option [value]="1">Berlangsung</ion-select-option>
+                          <ion-select-option [value]="2">Terlaksana</ion-select-option>
+                          <ion-select-option [value]="3">Batal</ion-select-option>
+                          <ion-select-option [value]="4">Menjadwalkan Ulang</ion-select-option>
+                        </ion-select>
+                      </ion-item>
+                    </ion-col>
+                </ion-row>
+              </ion-grid>
 
 
               <button mat-button matStepperPrevious>Back</button>

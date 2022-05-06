@@ -1,3 +1,8 @@
+$HandsetPortrait: 599.98px; 
+$large: 1500px;
+$medium: 960px;
+$small: 360px;
+
 ion-item.biaya {
 
   ion-label {
@@ -5,4 +10,26 @@ ion-item.biaya {
     width: 30px;
     min-width: 30px;
   }
+}
+
+.container {
+  min-height: 100%;
+  @media screen and (max-width: $large) {  
+    margin-inline: auto;
+    max-width: 70%;    
+    min-width: 0;
+  }
+  @media screen and (max-width: $medium) {
+    max-width: 100%;    
+    min-width: 0;
+  }
+
+  @media screen and (max-width: $small) {
+    min-width: 100%;    
+  }
+
+
+  margin-inline: auto;
+  max-width: 60%;    
+  min-width: 0;
 }

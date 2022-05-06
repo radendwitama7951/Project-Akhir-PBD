@@ -13,6 +13,11 @@ def getAllKencan():
     sql = open(SQLSCRIPTS_FOLDER+'/kencan_scripts/getAllKencan.sql')
     return Kencan.objects.raw(sql.read())
 
+# @byParams
+def getKencanByParams(query_params_list):
+    sql = open(SQLSCRIPTS_FOLDER+'/kencan_scripts/getKencanByParams.sql')
+    return Kencan.objects.raw(sql.read(), query_params_list)
+
 
 # @get(id)
 def getKencanById(kencan_id):
