@@ -4,7 +4,7 @@
 
   <ion-avatar slot="start">
     <ion-img 
-      src="https://lh3.googleusercontent.com/ogw/ADea4I6kj6Zm3t1wGInrp3koFYYL7nMC0r8jMJc7sP3WHg=s32-c-mo">
+      [src]="(activeUser$ | async)?.avatar">
     </ion-img>
   </ion-avatar>
   <ion-label>

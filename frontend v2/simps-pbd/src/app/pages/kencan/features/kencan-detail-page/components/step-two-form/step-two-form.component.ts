@@ -11,7 +11,6 @@ import { ActivatedRoute } from '@angular/router';
 import { IonDatetime } from '@ionic/angular';
 import { format, parseISO, getDate, getMonth, getYear } from 'date-fns';
 
-import * as moment from 'moment';
 import { Observable, Subscription } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 
@@ -37,7 +36,8 @@ export class StepTwoFormComponent implements OnInit, OnDestroy {
   public showTimePick: boolean = false;
   public datetimeValue!: string;
 
-  public minDate = moment().format();
+  public minDate = format(new Date(Date.now()), 'yyyy-MM');
+
   public isHandset$!: Observable<boolean>;
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -83,6 +83,8 @@ export class StepTwoFormComponent implements OnInit, OnDestroy {
     this._kencanService.update(updateTanggalKencan);
 
     this.tanggalKencan = date;
+
+    console.log(this.tanggalKencan, this.minDate);
     subscriptions.unsubscribe();
     this.showDatePick = false;
   }

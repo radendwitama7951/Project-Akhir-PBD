@@ -16,9 +16,8 @@ export class UserCardComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this._userService.collection$.subscribe((collection: any) => {
         this.activeUser$ = of(collection.entities[1]);
-        console.log('this', collection.entities[1]);
       })
-    )
+    );
   }
   ngOnInit() {}
 

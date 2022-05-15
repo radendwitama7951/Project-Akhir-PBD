@@ -1,6 +1,14 @@
 <ion-header>
   <ion-toolbar class="ion-padding-horizontal">
-    <ion-title>Laporan</ion-title>
+    <ion-title slot="start" class="ion-no-padding">Laporan
+
+    <ion-button
+      (click)="refreshLaporan()"
+      fill="clear">
+      <ion-icon name="refresh"></ion-icon>
+    </ion-button>
+    </ion-title>
+
     <ion-label slot="end">
       Mei 2022
     </ion-label>
@@ -9,5 +17,5 @@
 
 
 <ion-content class="ion-padding" scrollX="false">
-  <app-laporan-container></app-laporan-container>
+  <app-laporan-container ></app-laporan-container>
 </ion-content>

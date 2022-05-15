@@ -10,13 +10,9 @@ import { PasanganService } from 'src/app/core/services/pasangan.service';
   styleUrls: ['./list-pasangan-favorit.component.scss'],
 })
 export class ListPasanganFavoritComponent implements OnInit {
-  public pasanganData$!: Observable<PasanganInterface[]>;
+  public pasanganData!: PasanganInterface[];
 
-  constructor(private _pasanganService: PasanganService) {
-    this.pasanganData$ = this._pasanganService.entities$.pipe(
-      map((pasanganData: PasanganInterface[]) => pasanganData.slice(0, 5))
-    );
-  }
+  constructor() {}
 
   ngOnInit() {}
 }

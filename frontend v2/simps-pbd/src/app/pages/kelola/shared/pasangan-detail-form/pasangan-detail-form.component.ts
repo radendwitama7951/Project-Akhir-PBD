@@ -63,6 +63,7 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    this._pasanganService.load();
   }
 
   ubahDataPasangan(): void {

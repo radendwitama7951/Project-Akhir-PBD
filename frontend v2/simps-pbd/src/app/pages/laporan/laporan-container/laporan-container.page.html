@@ -1,20 +1,99 @@
 
 
-
 <section class="container ion-padding mat-elevation-z8">
+  <ng-container *ngIf="(loading$ | async) then laporanLoading">
+  </ng-container>
 
-  <ion-grid>
+  <ng-template #laporanLoading>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none"
+            class="ion-no-padding ion-no-margin">
+
+            <ion-avatar slot="start">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-avatar>
+            <ion-label>
+              <ion-skeleton-text style="height: 28px; width: 200px;" animated></ion-skeleton-text>
+              <ion-skeleton-text style="height: 19px; width: 300px;" animated></ion-skeleton-text>
+              <ion-skeleton-text style="height: 14px; width: 300px;" animated></ion-skeleton-text>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+        <ion-item lines="none">
+          <ion-label slot="end">
+            <ion-skeleton-text animated 
+              style="height: 19px; width: 115px;"></ion-skeleton-text>
+          </ion-label>
+        </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="ion-padding">
+          <ion-skeleton-text animated 
+            style="height: 24px; width: 200px;"></ion-skeleton-text>
+          <ion-text>
+          <ion-skeleton-text animated 
+            style="height: 19px"></ion-skeleton-text>
+          </ion-text>
+
+          <ion-skeleton-text animated style="height: 300px;"></ion-skeleton-text>
+        </ion-col>
+
+        <ion-col>
+
+          <ion-text>
+            <ion-skeleton-text animated style="height: 24px; width: 200px;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="height: 76px;"></ion-skeleton-text>
+            <br>          
+            <ion-skeleton-text animated style="height: 24px; width: 200px;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="height: 76px;"></ion-skeleton-text>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-skeleton-text animated style="height: 24px; width: 200px;"></ion-skeleton-text>
+          <ion-text >
+            <ion-skeleton-text animated style="width: 76px;"></ion-skeleton-text>
+          </ion-text>
+          <ion-skeleton-text animated style="height: 280px;"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+          <ion-skeleton-text animated style="height: 24px; width: 200px;"></ion-skeleton-text>
+          <ion-text >
+            <ion-skeleton-text animated style="width: 76px;"></ion-skeleton-text>
+          </ion-text>
+            <ion-skeleton-text animated style="height: 300px;"></ion-skeleton-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ng-template>
+
+
+
+
+  <ion-grid [ngClass]="(loading$ | async) ? 'ion-hide':''">
     <ion-row>
       <ion-col>
         <app-user-card></app-user-card>
       </ion-col>
 
       <ion-col>
-      <ion-item lines="none">
-        <ion-label slot="end">
-          {{today | date: 'short'}}
-        </ion-label>
-      </ion-item>
+        <ion-item lines="none">
+          <ion-label slot="end">
+            {{today | date: 'short'}}
+          </ion-label>
+        </ion-item>
       </ion-col>
     </ion-row>
 
@@ -24,6 +103,7 @@
         <ion-text>
           Perbandingan kencan anda dengan relasi pasangan berbeda 
         </ion-text>
+
         <app-pie-chart-pasangan-kencan></app-pie-chart-pasangan-kencan>
       </ion-col>
 
@@ -46,9 +126,11 @@
     <ion-row>
       <ion-col>
         <ion-title>Pengeluaran Bulan Ini</ion-title>
-        <ion-text >
+
+        <ion-text>
           {{ today | date: 'MMMM YYYY' }}
         </ion-text>
+
         <app-line-chart-pengeluaran></app-line-chart-pengeluaran>
       </ion-col>
     </ion-row>
@@ -59,10 +141,12 @@
         <ion-text class="ion-no-margin">
           {{ today | date: 'MMMM YYYY' }}
         </ion-text>
-        <app-list-pasangan-favorit></app-list-pasangan-favorit>
+        <app-list-pasangan-favorit ></app-list-pasangan-favorit>
       </ion-col>
     </ion-row>
   </ion-grid>
+
+
 </section>
 
 

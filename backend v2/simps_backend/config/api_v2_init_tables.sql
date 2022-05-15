@@ -63,6 +63,21 @@ CREATE TABLE `api_v2_kencan` (
   `status_kencan_id` integer NOT NULL
 );
 
+--
+-- Create laporan table
+--
+DROP TABLE IF EXISTS api_v2_laporan;
+CREATE TABLE IF EXISTS api_v2_laporan (
+  laporan_id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  created DATETIME DEFAULT NOW(),
+  data JSON
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
+--
+-- CONSTRAINT
+--
 ALTER TABLE
   `api_v2_pasangan`
 ADD

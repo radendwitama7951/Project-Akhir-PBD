@@ -1,6 +1,7 @@
 import { DefaultDataServiceConfig, EntityMetadataMap } from '@ngrx/data';
 import { BeritaInterface } from 'src/app/core/interfaces/berita.interface';
 import { KencanInterface } from 'src/app/core/interfaces/kencan.interface';
+import { LaporanInterface } from 'src/app/core/interfaces/laporan.interface';
 import { PasanganInterface } from 'src/app/core/interfaces/pasangan.interface';
 import { StatusPasanganInterface } from 'src/app/core/interfaces/status-pasangan.interface';
 import { UserInterface } from 'src/app/core/interfaces/user.interface';
@@ -11,6 +12,7 @@ export const pluralNames = {
   User: 'user',
   Pasangan: 'pasangan',
   Kencan: 'kencan',
+  Laporan: 'laporan',
 };
 
 export const defaultDataServiceConfig: DefaultDataServiceConfig = {
@@ -60,6 +62,11 @@ export const appEntityMetadata: EntityMetadataMap = {
       optimisticAdd: false,
       optimisticUpdate: true,
     },
+  },
+
+  Lapooran: {
+    entityName: 'Laporan',
+    selectId: (laporan: LaporanInterface | any) => laporan.user_id || 0,
   },
 };
 

@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { LaporanComponentService } from './core/services/laporan-component.service';
+import { LaporanService } from './core/services/laporan.service';
 import { UserService } from './core/services/user.service';
 
 @Component({
@@ -7,7 +9,10 @@ import { UserService } from './core/services/user.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(private _userService: UserService) {
+  constructor(
+    private _userService: UserService,
+    private _laporanService: LaporanComponentService
+  ) {
     this._userService.getByKey(1);
   }
 }

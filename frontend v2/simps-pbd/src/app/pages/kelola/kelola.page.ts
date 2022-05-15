@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { LaporanComponentService } from 'src/app/core/services/laporan-component.service';
 import { PasanganService } from 'src/app/core/services/pasangan.service';
 
 @Component({
@@ -6,10 +7,17 @@ import { PasanganService } from 'src/app/core/services/pasangan.service';
   templateUrl: './kelola.page.html',
   styleUrls: ['./kelola.page.scss'],
 })
-export class KelolaPage implements OnInit {
-  constructor(private _pasanganService: PasanganService) {}
+export class KelolaPage implements OnInit, OnDestroy {
+  constructor(
+    private _pasanganService: PasanganService,
+    private _laporanService: LaporanComponentService
+  ) {}
 
   ngOnInit() {
     this._pasanganService.getAll().subscribe(console.log);
+  }
+
+  ngOnDestroy(): void {
+    this._laporanService.loadLaporan();
   }
 }

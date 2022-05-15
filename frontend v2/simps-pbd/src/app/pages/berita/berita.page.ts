@@ -9,6 +9,7 @@ import {
   EntityServices,
 } from '@ngrx/data';
 import { IonInfiniteScroll } from '@ionic/angular';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-berita',

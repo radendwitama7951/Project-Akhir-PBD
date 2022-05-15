@@ -27,14 +27,7 @@ export class PieChartPasanganKencanComponent {
     },
   };
 
-  public pieChartData: ChartConfiguration['data'] = {
-    labels: ['Mantan', 'Pacar', 'Selingkuhan'],
-    datasets: [
-      {
-        data: [300, 500, 100],
-      },
-    ],
-  };
+  public pieChartData!: ChartConfiguration['data'];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
   public pieChartPlugins = [DatalabelsPlugin];
