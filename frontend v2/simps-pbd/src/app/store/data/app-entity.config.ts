@@ -18,10 +18,10 @@ export const pluralNames = {
 export const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: environment.apiUrl,
   //  root: 'https://simps-api.herokuapp.com/api/v2/',
-  timeout: 6000, // request timeout,
+  timeout: 30000, // request timeout,
 };
 
-export const appEntityMetadata: EntityMetadataMap = {
+export const entityMetadata: EntityMetadataMap = {
   Berita: {
     entityName: 'Berita',
     selectId: (berita: BeritaInterface) => berita.berita_id,
@@ -64,13 +64,13 @@ export const appEntityMetadata: EntityMetadataMap = {
     },
   },
 
-  Lapooran: {
+  Laporan: {
     entityName: 'Laporan',
     selectId: (laporan: LaporanInterface | any) => laporan.user_id || 0,
   },
 };
 
 export const appEntityConfig = {
-  appEntityMetadata,
+  entityMetadata,
   pluralNames,
 };

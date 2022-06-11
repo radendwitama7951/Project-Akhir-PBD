@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { EntityCollection } from '@ngrx/data';
 import { Observable, Subscription } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, mergeMap, first } from 'rxjs/operators';
 import { KencanInterface } from 'src/app/core/interfaces/kencan.interface';
 
 import { PasanganInterface } from 'src/app/core/interfaces/pasangan.interface';
@@ -17,7 +17,7 @@ import { PasanganService } from 'src/app/core/services/pasangan.service';
 })
 export class StepOneFormComponent implements OnInit {
   @Input() public selectedKencanId?: string;
-  public dataPasangan$!: Observable<PasanganInterface[]>;
+  public pasanganList$!: Observable<PasanganInterface[]>;
   public selectedPasangan$!: Observable<PasanganInterface>;
   public selectedKencan$!: Observable<KencanInterface>;
   public loading$!: Observable<boolean>;
@@ -25,13 +25,20 @@ export class StepOneFormComponent implements OnInit {
   constructor(
     private _pasanganService: PasanganService,
     private _kencanService: KencanService
-  ) {
-    this.dataPasangan$ = this._pasanganService.entities$;
-    this.loading$ = this._kencanService.loading$;
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.selectedKencan$ = this._kencanService.getByKey(this.selectedKencanId);
+    this.pasanganList$ = this._pasanganService.entities$;
+    this.loading$ = this._kencanService.loading$;
+    this.selectedKencan$ = this._kencanService.selectEntityById(
+      this.selectedKencanId
+    );
+
+    this.selectedPasangan$ = this.selectedKencan$.pipe(
+      mergeMap((kencan) =>
+        this._pasanganService.selectEntityById(kencan.pasangan_id)
+      )
+    );
 
     this.selectedKencan$.subscribe(({ pasangan_id }) => {
       this.selectedPasangan$ = this._pasanganService.selectEntityById(
@@ -53,15 +60,15 @@ export class StepOneFormComponent implements OnInit {
       pasangan_id: this.pasanganIdControl.value,
     };
 
-    let subscriptions: Subscription = this.selectedKencan$.subscribe(
-      (kencan: KencanInterface) => {
+    let subscriptions: Subscription = this.selectedKencan$
+      .pipe(first())
+      .subscribe((kencan: KencanInterface) => {
         updatePasanganKencan = { ...kencan, ...updatePasanganKencan };
         this._kencanService.update(updatePasanganKencan);
         this.selectedPasangan$ = this._pasanganService.selectEntityById(
           updatePasanganKencan.pasangan_id
         );
-      }
-    );
+      });
   }
 
   compareFn(e1: number, e2: number): boolean {

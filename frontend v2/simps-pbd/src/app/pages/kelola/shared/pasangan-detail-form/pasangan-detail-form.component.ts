@@ -21,27 +21,26 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
   public statusPasangan!: string;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: Observable<PasanganInterface>,
+    @Inject(MAT_DIALOG_DATA) public data: PasanganInterface,
     private dialog: MatDialogRef<PasanganDetailFormComponent>,
     private _pasanganService: PasanganService,
     private fb: FormBuilder,
     private breakpointObserver: BreakpointObserver,
     private router: Router
   ) {
-    this.subscriptions = this.data.subscribe((pasangan: PasanganInterface) => {
-      console.log(pasangan);
-      this.pasangan = pasangan;
-      this.statusPasangan = pasangan.status_pasangan;
-      this.pasanganFormDetail = fb.group({
-        first_name: [pasangan.first_name, [Validators.required]],
-        last_name: [pasangan.last_name, [Validators.required]],
-        special_name: [pasangan.special_name, [Validators.required]],
-        avatar: [pasangan.avatar, [Validators.required]],
-        status_pasangan_id: [
-          pasangan.status_pasangan_id,
-          [Validators.required],
-        ],
-      });
+    this.pasangan = this.data;
+    this.statusPasangan = this.pasangan.status_pasangan;
+    this.pasanganFormDetail = fb.group({
+      first_name: [this.pasangan.first_name, [Validators.required]],
+      last_name: [this.pasangan.last_name, [Validators.required]],
+      special_name: [this.pasangan.special_name, [Validators.required]],
+      avatar: [this.pasangan.avatar, [Validators.required]],
+      ulang_tahun: [this.pasangan.ulang_tahun],
+      tanggal_jadian: [this.pasangan.tanggal_jadian],
+      status_pasangan_id: [
+        this.pasangan.status_pasangan_id,
+        [Validators.required],
+      ],
     });
 
     this.isHandset$ = breakpointObserver
@@ -54,7 +53,6 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
       this.breakpointObserver
         .observe([Breakpoints.Small, Breakpoints.Handset])
         .subscribe(({ matches }) => {
-          console.log(matches);
           if (matches) this.dialog.updateSize('200%', '80%');
           else this.dialog.updateSize('50%', '80%');
         })
@@ -63,7 +61,6 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-    this._pasanganService.load();
   }
 
   ubahDataPasangan(): void {
@@ -75,9 +72,7 @@ export class PasanganDetailFormComponent implements OnInit, OnDestroy {
   }
 
   hapusDataPasangan(): void {
-    console.log('this id ', this.pasangan.pasangan_id);
     this._pasanganService.delete(this.pasangan.pasangan_id);
-    this._pasanganService.load();
     this.dialog.close();
   }
 

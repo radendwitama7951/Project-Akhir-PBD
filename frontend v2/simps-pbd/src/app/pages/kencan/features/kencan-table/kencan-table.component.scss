@@ -19,3 +19,11 @@ td, th {
   align-items: center;
   justify-content: center;
 }
+
+
+ion-button.refresh-button {
+  --color: var(--ion-color-light-shade);
+  position: absolute;
+  top: 45%;
+  transform: translateY(-50%);
+}

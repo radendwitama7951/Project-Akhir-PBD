@@ -11,7 +11,8 @@ class StatusPasanganSerializer(serializers.ModelSerializer):
 
 class PasanganSerializer(serializers.ModelSerializer):
     pasangan_id = serializers.IntegerField(read_only=False)
-    kencan_terakhir = serializers.DateField(read_only=False)
+    #kencan_terakhir = serializers.DateField(read_only=False, allow_null=True)
+    status_pasangan = serializers.CharField(max_length=32, required=False, allow_null=True)
     class Meta:
         model = Pasangan
         fields = '__all__'
@@ -20,6 +21,7 @@ class PasanganSerializer(serializers.ModelSerializer):
 class PasanganCreateUpdateSerializer(serializers.ModelSerializer):
     # kencan_terakhir = serializers.DateField(read_only=True)
     status_pasangan = serializers.CharField(max_length=32, read_only=True)
+
     class Meta:
         model = Pasangan
         fields = '__all__'

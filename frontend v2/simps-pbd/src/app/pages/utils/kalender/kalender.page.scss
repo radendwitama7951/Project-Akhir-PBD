@@ -1,0 +1,31 @@
+$sm : 576px;
+$md : 768px;
+$lg : 992px;
+$xl : 1200px;
+$xxl : 1535px;
+
+$kalender-page-padding: 16px;
+
+
+h3 {
+  margin: 0 0 10px;
+}
+
+pre {
+  background-color: #f5f5f5;
+  padding: 15px;
+}
+
+ion-content.kalender-page-padding {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 0;
+  --padding-bottom: 0;
+
+  @media screen and (min-width: $xxl) {
+    --padding-start: 200px;
+    --padding-end: 200px
+    
+  }
+
+}

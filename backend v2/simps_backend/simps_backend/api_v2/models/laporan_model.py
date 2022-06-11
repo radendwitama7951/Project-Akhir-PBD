@@ -8,5 +8,8 @@ class Laporan (models.Model):
     # labels = models.CharField(validators=validators.int_list_validator) # Array of labels
 
 
+    class Meta:
+        verbose_name_plural = 'Laporan'
+
     def __str__(self):
         return '%s' % (self.judul)

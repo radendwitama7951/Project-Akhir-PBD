@@ -41,6 +41,7 @@
     "@ngrx/router-store": "^13.1.0",
     "@ngrx/store": "^13.1.0",
     "@ngrx/store-devtools": "^13.1.0",
+    "angular-calendar": "^0.29.0",
     "body-parser": "^1.20.0",
     "chart.js": "^3.7.1",
     "chartjs-plugin-annotation": "^1.4.0",

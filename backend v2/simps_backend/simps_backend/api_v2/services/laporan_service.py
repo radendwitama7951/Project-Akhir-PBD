@@ -4,12 +4,15 @@ from simps_backend.settings import SQLSCRIPTS_FOLDER
 
 # @Params
 def getLaporanByParams(params):
-    sql = open(SQLSCRIPTS_FOLDER+'/laporan_scripts/getLaporanByParams.sql')
+    # sql = open(SQLSCRIPTS_FOLDER+'/laporan_scripts/getLaporanByParams.sql')
+
 
     laporan = None
+
     with connection.cursor() as cursor:
-        cursor.callproc()
+        cursor.callproc('get_laporan', params)
         laporan = cursor.fetchone()
+
 
     return laporan
 

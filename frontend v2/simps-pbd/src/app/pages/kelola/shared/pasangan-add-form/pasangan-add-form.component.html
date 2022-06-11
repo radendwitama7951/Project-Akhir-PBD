@@ -20,19 +20,35 @@
 
     <form [formGroup]="pasanganFormDetail" novalidate>
       <ion-item>
-        <ion-label position="floating">First Name</ion-label>
-        <ion-input formControlName="first_name"></ion-input>
+        <ion-label position="floating">First Name*</ion-label>
+        <ion-input formControlName="first_name"
+          placeholder="contoh. Mia"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label position="floating">Last Name</ion-label>
-        <ion-input formControlName="last_name"></ion-input>
+        <ion-label position="floating">Last Name*</ion-label>
+        <ion-input formControlName="last_name"
+          placeholder="contoh. Khalifa"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Special Name</ion-label>
-        <ion-input formControlName="special_name"></ion-input>
+        <ion-input formControlName="special_name" placeholder="contoh. Bebeb"></ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Ulang Tahun</ion-label>
+        <ion-input formControlName="ulang_tahun"
+          placeholder="contoh. 1997-02-19 (yyyy-MM-dd)"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label position="floating">Tanggal Jadian</ion-label>
+        <ion-input formControlName="tanggal_jadian"
+          placeholder="contoh. 2016-02-14 (yyyy-MM-dd)"></ion-input>
+      </ion-item>
+
 
       <ion-item>
         <ion-label position="floating">Avatar URL</ion-label>

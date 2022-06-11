@@ -5,8 +5,8 @@ import { IonicModule } from '@ionic/angular';
 
 import { KencanPageRoutingModule } from './kencan-routing.module';
 import { KencanPage } from './kencan.page';
-import { KencanTableComponent } from './features/kencan-table/kencan-table.component';
 import { KencanTableModule } from './features/kencan-table/kencan-table.module';
+import { KencanService } from 'src/app/core/services/kencan.service';
 
 @NgModule({
   imports: [
@@ -18,4 +18,8 @@ import { KencanTableModule } from './features/kencan-table/kencan-table.module';
   ],
   declarations: [KencanPage],
 })
-export class KencanPageModule {}
+export class KencanPageModule {
+  constructor(private _kencanService: KencanService) {
+    this._kencanService.load();
+  }
+}

@@ -13,10 +13,13 @@ import { KencanInterface } from 'src/app/core/interfaces/kencan.interface';
 import {
   debounceTime,
   distinctUntilChanged,
+  first,
   map,
   startWith,
+  take,
+  takeUntil,
 } from 'rxjs/operators';
-import { fromEvent, Observable, Subscription } from 'rxjs';
+import { fromEvent, Observable, Subject, Subscription } from 'rxjs';
 import { KencanService } from 'src/app/core/services/kencan.service';
 import { PasanganService } from 'src/app/core/services/pasangan.service';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
@@ -27,6 +30,7 @@ import {
   KencanFilterOptions,
 } from './components/kencan-filter-options.component';
 import { QueryParams } from '@ngrx/data';
+import { format, lastDayOfMonth } from 'date-fns';
 
 @Component({
   selector: 'app-kencan-table',
@@ -38,7 +42,8 @@ export class KencanTableComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild('searchInput') input: ElementRef;
 
-  private subscriptions!: Subscription;
+  private today = new Date(Date.now());
+  private destroyed$ = new Subject<boolean>();
   public loading$!: Observable<boolean>;
   public isHandset$: Observable<boolean>;
   private filterConfig: FilterConfigInterface = {
@@ -46,8 +51,8 @@ export class KencanTableComponent implements OnInit, AfterViewInit, OnDestroy {
     search_nama: true,
     search_tempat: true,
     search_tanggal: true,
-    from_tanggal: this.formatDate(new Date(Date.now())),
-    to_tanggal: new Date().getFullYear() + '-12-31',
+    from_tanggal: format(this.today, 'yyyy-MM-01'),
+    to_tanggal: format(lastDayOfMonth(this.today), 'yyyy-MM-dd'),
   };
 
   private terms$!: Observable<any>;
@@ -60,26 +65,14 @@ export class KencanTableComponent implements OnInit, AfterViewInit, OnDestroy {
     private breakpointObserver: BreakpointObserver,
     public router: Router,
     private dialog: MatDialog
-  ) {
-    this.subscriptions = this._kencanService.entities$.subscribe(
-      (dataKencan: KencanInterface[]) => {
-        // Assign the data to the data source for the table to render
-        this.dataSource.data = dataKencan;
-        setTimeout(() => {
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        }, 100);
-      }
-    );
+  ) {}
 
+  ngOnInit(): void {
     this.loading$ = this._kencanService.loading$;
-
     this.isHandset$ = this.breakpointObserver
       .observe([Breakpoints.HandsetPortrait])
       .pipe(map(({ matches }) => matches));
   }
-
-  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.terms$ = fromEvent<any>(this.input.nativeElement, 'keyup').pipe(
@@ -89,30 +82,45 @@ export class KencanTableComponent implements OnInit, AfterViewInit, OnDestroy {
       distinctUntilChanged()
     );
 
-    this.subscriptions.add(
-      this.terms$.subscribe((term: string) => {
-        this.filterConfig = {
-          ...this.filterConfig,
-          ...{ search_term: term },
-        };
-        this._kencanService
-          .getWithQuery(this.filterConfig as unknown as QueryParams)
-          .subscribe((filteredResponse: KencanInterface[]) => {
-            this.dataSource.data = filteredResponse;
+    this.terms$.pipe(takeUntil(this.destroyed$)).subscribe((term: string) => {
+      this.filterConfig = {
+        ...this.filterConfig,
+        ...{ search_term: term },
+      };
+      this._kencanService
+        .getWithQuery(this.filterConfig as unknown as QueryParams)
+        .subscribe((filteredResponse: KencanInterface[]) => {
+          this.dataSource.data = filteredResponse;
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
 
-            if (this.dataSource.paginator) {
-              this.dataSource.paginator.firstPage();
-            }
-          });
-      })
-    );
+          if (this.dataSource.paginator) {
+            this.dataSource.paginator.firstPage();
+          }
+        });
+    });
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.destroyed$.next(true);
+    this.destroyed$.unsubscribe();
   }
 
-  openKencanDetail(kencanId: number): void {
+  public refreshTable(): void {
+    this._kencanService
+      .getWithQuery(this.filterConfig as unknown as QueryParams)
+      .subscribe((filteredResponse: KencanInterface[]) => {
+        this.dataSource.data = filteredResponse;
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+
+        if (this.dataSource.paginator) {
+          this.dataSource.paginator.firstPage();
+        }
+      });
+  }
+
+  openKencanDetail(kencanData: KencanInterface, kencanId?: number): void {
     this.router.navigate(['kencan', kencanId]);
   }
 
@@ -126,12 +134,14 @@ export class KencanTableComponent implements OnInit, AfterViewInit, OnDestroy {
 
     dialogRef
       .afterClosed()
+      .pipe(takeUntil(this.destroyed$))
       .subscribe((filterConfigRes: FilterConfigInterface | any) => {
         if (!filterConfigRes) return;
         this.filterConfig = filterConfigRes;
         this._kencanService
           .getWithQuery(this.filterConfig as unknown as QueryParams)
-          .subscribe((res: KencanInterface[]) => (this.dataSource.data = res));
+          .pipe(first())
+          .subscribe();
       });
   }
 

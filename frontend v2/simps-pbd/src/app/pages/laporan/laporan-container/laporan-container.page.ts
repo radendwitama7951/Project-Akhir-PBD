@@ -7,8 +7,8 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject, Subscription } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
 import { LaporanInterface } from 'src/app/core/interfaces/laporan.interface';
 import { LaporanComponentService } from 'src/app/core/services/laporan-component.service';
 import { LineChartPengeluaranComponent } from '../features/line-chart-pengeluaran/line-chart-pengeluaran.component';
@@ -21,7 +21,7 @@ import { PieChartPasanganKencanComponent } from '../features/pie-chart-pasangan-
   styleUrls: ['./laporan-container.page.scss'],
 })
 export class LaporanContainerPage implements OnInit, AfterViewInit, OnDestroy {
-  private subscriptions: Subscription = new Subscription();
+  private destroyed$ = new Subject<boolean>();
   public loading$?: Observable<boolean>;
 
   @ViewChild(LineChartPengeluaranComponent)
@@ -39,43 +39,43 @@ export class LaporanContainerPage implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {}
 
   ngAfterViewInit(): void {
-    this.subscriptions.add(
-      this._laporanService.datasource$.subscribe(
-        (laporan: LaporanInterface) => {
-          this.chartPengeluaran.lineChartData = {
-            datasets: [
-              {
-                data: laporan?.pengeluaran.biaya.map(
-                  (
-                    (sum) => (value: number) =>
-                      (sum += value)
-                  )(0)
-                ),
-                label: 'Bulan Mei',
-                fill: 'origin',
-              },
-            ],
-            labels: laporan?.pengeluaran.tanggal,
-          };
+    this._laporanService.datasource$
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((laporan: LaporanInterface) => {
+        this.chartPengeluaran.lineChartData = {
+          datasets: [
+            {
+              data: laporan?.pengeluaran.biaya.map(
+                (
+                  (sum) => (value: number) =>
+                    (sum += value)
+                )(0)
+              ),
+              label: new Date(Date.now()).toLocaleString('id', {
+                month: 'long',
+              }),
+              fill: 'origin',
+            },
+          ],
+          labels: laporan?.pengeluaran.tanggal,
+        };
 
-          this.chartRasioPasangan.pieChartData = {
-            labels: laporan?.rasio_pasangan_kencan.status_pasangan,
-            datasets: [
-              {
-                data: laporan?.rasio_pasangan_kencan.total_kencan,
-              },
-            ],
-          };
+        this.chartRasioPasangan.pieChartData = {
+          labels: laporan?.rasio_pasangan_kencan.status_pasangan,
+          datasets: [
+            {
+              data: laporan?.rasio_pasangan_kencan.total_kencan,
+            },
+          ],
+        };
 
-          this.listPasanganTeratas.pasanganData =
-            laporan?.pasangan_kencan_teratas;
-        }
-      )
-    );
+        this.listPasanganTeratas.pasanganData =
+          laporan?.pasangan_kencan_teratas;
+      });
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
-    console.log(this.subscriptions.closed);
+    this.destroyed$.next(true);
+    this.destroyed$.unsubscribe();
   }
 }

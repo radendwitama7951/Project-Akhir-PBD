@@ -1,7 +1,7 @@
 
 <h2 matDialogTitle>Filter
 
-<button matDialogClose mat-icon-button class="close-button">
+<button [matDialogClose]="undefined" mat-icon-button class="close-button">
   <mat-icon>close</mat-icon>
 </button>
 </h2>
@@ -47,7 +47,7 @@
       <ion-col matDialogActions class="ion-justify-content-end d-flex">
 
         <button mat-button
-          matDialogClose>Batal</button>
+          [matDialogClose]="undefined">Batal</button>
         <button mat-button [disabled]="!kencanFilterForm.valid"
           [matDialogClose]="simpanFilterKencan()" color="accent">Simpan</button>
       </ion-col>

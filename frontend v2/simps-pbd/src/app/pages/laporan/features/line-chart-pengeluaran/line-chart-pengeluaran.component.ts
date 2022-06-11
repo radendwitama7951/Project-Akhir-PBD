@@ -14,7 +14,6 @@ import { LaporanInterface } from 'src/app/core/interfaces/laporan.interface';
 })
 export class LineChartPengeluaranComponent {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
-  private subscriptions: Subscription = new Subscription();
 
   public lineChartType: ChartType = 'line';
   public chartAspectRatioY$!: Observable<number>;

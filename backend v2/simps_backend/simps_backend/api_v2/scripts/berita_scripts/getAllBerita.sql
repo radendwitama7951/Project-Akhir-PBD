@@ -1,2 +1,1 @@
-SELECT * FROM api_v2_berita
-ORDER BY tanggal DESC;
+SELECT * FROM all_berita;

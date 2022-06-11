@@ -16,4 +16,7 @@ urlpatterns = [
 
         path('user/', views.UserView.as_view()),
         path('user/<int:pk>', views.UserDetailView.as_view()),
+
+        # UTILS
+        path('utils/tanggal-penting/', views.TanggalPentingView.as_view())
 ]

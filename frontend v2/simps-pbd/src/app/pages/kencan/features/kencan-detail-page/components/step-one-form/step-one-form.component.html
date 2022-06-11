@@ -47,7 +47,7 @@
           <ion-select [compareWith]="compareFn"
             [formControl]="pasanganIdControl">
             <ion-select-option 
-              *ngFor="let opsi of (dataPasangan$ | async)"
+              *ngFor="let opsi of (pasanganList$ | async)"
               [value]="opsi.pasangan_id">
               {{ opsi.first_name + ' ' + opsi.last_name }}
             </ion-select-option>

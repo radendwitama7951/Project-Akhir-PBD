@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Observable, Subject, Subscription } from 'rxjs';
 
 import { BeritaService } from 'src/app/core/services/berita.service';
 import { BeritaInterface } from 'src/app/core/interfaces/berita.interface';
@@ -9,52 +9,51 @@ import {
   EntityServices,
 } from '@ngrx/data';
 import { IonInfiniteScroll } from '@ionic/angular';
-import { delay } from 'rxjs/operators';
+import { delay, first, take, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-berita',
   templateUrl: './berita.page.html',
   styleUrls: ['./berita.page.scss'],
 })
-export class BeritaPage implements OnInit {
+export class BeritaPage implements OnInit, OnDestroy {
   @ViewChild(IonInfiniteScroll) infiniteScroll!: IonInfiniteScroll;
-  private beritaService!: EntityCollectionService<BeritaInterface>;
-  private subscriptions: Subscription = new Subscription();
+  private destroyed$ = new Subject<boolean>();
   public berita$!: Observable<BeritaInterface[]>;
   public loading$!: Observable<boolean>;
 
-  constructor(private entityServices: EntityServices) {
-    this.beritaService = entityServices.getEntityCollectionService('Berita');
-
-    this.beritaService.getAll();
-    this.berita$ = this.beritaService.entities$;
-    this.loading$ = this.beritaService.loading$;
-  }
+  constructor(private _beritaService: BeritaService) {}
 
   ngOnInit() {
-    this.berita$.subscribe(console.log);
+    this.loading$ = this._beritaService.loading$;
+    this.berita$ = this._beritaService
+      .getAll()
+      .pipe(takeUntil(this.destroyed$));
+  }
+
+  ngOnDestroy(): void {
+    this.destroyed$.next(true);
+    this.destroyed$.unsubscribe();
   }
 
   loadBerita(event: any): any {
-    this.subscriptions.add(
-      this.loading$.subscribe((done) => {
-        event.target.complete();
-      })
-    );
+    this.loading$.pipe(takeUntil(this.destroyed$)).subscribe((done) => {
+      event.target.complete();
+    });
 
     // App logic to determine if all data is loaded
     // and disable the infinite scroll
-    this.subscriptions.add(
-      this.beritaService.keys$.subscribe((values: number[]) => {
+    this._beritaService.keys$
+      .pipe(takeUntil(this.destroyed$))
+      .subscribe((values: number[]) => {
         if (values.length > 25) {
           event.target.disabled = true;
         }
-      })
-    );
+      });
   }
 
   public search(beritaId: string): void {
     let berita: Observable<BeritaInterface> =
-      this.beritaService.getByKey(beritaId);
+      this._beritaService.getByKey(beritaId);
   }
 }

@@ -33,6 +33,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./pages/user/user.module').then((m) => m.UserPageModule),
   },
+  {
+    path: 'utils',
+    loadChildren: () =>
+      import('./pages/utils/utils.module').then((m) => m.UtilsPageModule),
+  },
 ];
 
 @NgModule({

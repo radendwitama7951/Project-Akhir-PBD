@@ -1,1 +1,1 @@
-CALL get_laporan(%s, %s, %s);
+get_laporan

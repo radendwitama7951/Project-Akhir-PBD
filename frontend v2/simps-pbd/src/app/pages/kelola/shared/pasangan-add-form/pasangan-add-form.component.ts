@@ -27,6 +27,8 @@ export class PasanganAddFormComponent implements OnInit, OnDestroy {
     special_name: ['', [Validators.required]],
     status_pasangan_id: [this.data, [Validators.required]],
     avatar: [this.defaultAvatar, [Validators.required]],
+    ulang_tahun: [''],
+    tanggal_jadian: [''],
   });
 
   constructor(

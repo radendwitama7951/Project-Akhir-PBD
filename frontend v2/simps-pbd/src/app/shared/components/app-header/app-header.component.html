@@ -8,10 +8,22 @@
   <ion-toolbar color="medium">
 
     <ion-title>SIMPS</ion-title>
-    <ion-button slot="secondary" color="light" fill="clear"
-      routerLink="user" routerLinkActive="router-link-active">
-      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="end">
+      <ion-button  color="light" fill="clear"
+        [routerLink]="['','utils','kalender']" routerLinkActive="router-link-active" >
+        <ion-icon name="calendar-outline"></ion-icon>
+        <ng-container *ngIf="(todayEventsCount$ | async) as todayEventsCount">
+          <ion-badge *ngIf="todayEventsCount > 0" id="notifications-badge" color="danger">
+          {{ todayEventsCount }}
+        </ion-badge>
+        </ng-container>
+      </ion-button>
+
+      <ion-button  color="light" fill="clear"
+        routerLink="user" routerLinkActive="router-link-active">
+        <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 
   <ion-toolbar color="dark">
@@ -26,6 +38,10 @@
         </ion-col>
     </ion-grid>
   </ion-toolbar>
+  <ion-progress-bar 
+    *ngIf="loading$ | async"
+    color="secondary" type="indeterminate"></ion-progress-bar>
+
 </ng-template>
 
 <!-- Mobile Menu -->
@@ -41,10 +57,23 @@
   
     <ion-title class="ion-text-center">SIMPS</ion-title>
 
-    <ion-button slot="end" color="light" fill="clear"
-      routerLink="user" routerLinkActive="router-link-active">
-      <ion-icon slot="icon-only" name="person-circle"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="end">
+      <ion-button  color="light" fill="clear"
+        [routerLink]="['','utils','kalender']" routerLinkActive="router-link-active">
+        <ion-icon name="calendar-outline"></ion-icon>
+        <ng-container *ngIf="(todayEventsCount$ | async) as todayEventsCount">
+          <ion-badge *ngIf="todayEventsCount > 0" id="notifications-badge" color="danger">
+          {{ todayEventsCount }}
+        </ion-badge>
+        </ng-container>
+      </ion-button>
+
+      <ion-button  color="light" fill="clear"
+        routerLink="user" routerLinkActive="router-link-active">
+        <ion-icon  name="person-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 
   <ion-accordion-group>

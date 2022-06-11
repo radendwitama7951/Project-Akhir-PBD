@@ -4,6 +4,14 @@ from simps_backend.api_v2.models.pasangan_model import Pasangan
 
 class StatusKencan(models.Model):
     status_kencan_id = models.IntegerField(primary_key=True)
+    """
+    0 Terjadwal
+    1 Sedang Berlangsung
+    2 Terlaksana
+    3 Batal
+    4 Menjadwalkan Ulang
+    """
+
     keterangan = models.CharField(max_length=32)
 
     def __str__(self):
@@ -14,7 +22,7 @@ class Kencan(models.Model):
     tanggal = models.DateField()
     jam = models.TimeField(auto_now_add=False)
     tempat = models.TextField()
-    pasangan_id = models.IntegerField(db_column="pasangan_id")
+    pasangan_id = models.IntegerField(db_column="pasangan_id", null=True)
     pasangan = models.CharField (max_length=32)
     """
     pasangan = models.ForeignKey(
@@ -26,7 +34,7 @@ class Kencan(models.Model):
 
     biaya = models.IntegerField()
 
-    status_kencan_id = models.IntegerField(db_column="status_kencan_id")
+    status_kencan_id = models.IntegerField(db_column="status_kencan_id", null=True)
     status_kencan = models.CharField(max_length=32)
 
 
@@ -38,6 +46,10 @@ class Kencan(models.Model):
             db_column="status_kencan_id"
     )
     """
+
+
+    class Meta:
+        verbose_name_plural = 'Kencan'
 
     def __str__(self):
         return '%d' % (self.kencan_id)

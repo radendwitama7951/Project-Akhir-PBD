@@ -23,11 +23,9 @@ export class KencanDetailPage implements OnInit, OnDestroy {
   public selectedKencanId!: string;
 
   constructor(
-    private _pasanganService: PasanganService,
     public _kencanService: KencanService,
     private activatedRoute: ActivatedRoute
   ) {
-    this.subscriptions.add(this._pasanganService.getAll().subscribe());
     this.selectedKencanId =
       this.activatedRoute.snapshot.paramMap.get('kencanId');
   }
@@ -35,7 +33,6 @@ export class KencanDetailPage implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
     this._kencanService.load();
   }
 }

@@ -14,9 +14,12 @@ class Pasangan(models.Model):
     last_name = models.CharField(max_length=32)
     special_name = models.CharField(max_length=32)
     avatar = models.URLField()
-    kencan_terakhir = models.DateField(null=True)
-    status_pasangan_id = models.IntegerField(db_column="status_pasangan_id")
-    status_pasangan = models.CharField(max_length=32)
+    ulang_tahun =  models.DateField(null=True, blank=True)
+    tanggal_jadian =  models.DateField(null=True, blank=True)
+    kencan_terakhir = models.DateField(null=True, blank=True, default=None)
+    status_pasangan_id = models.IntegerField(db_column="status_pasangan_id", null=True)
+
+    status_pasangan = models.CharField(max_length=32, default=None)
     """
     status_pasangan = models.ForeignKey(
             'StatusPasangan', 
@@ -25,6 +28,10 @@ class Pasangan(models.Model):
             verbose_name='Relasi ke tabel StatusPasangan'
     )
     """
+
+
+    class Meta:
+        verbose_name_plural = 'Pasangan'
 
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)

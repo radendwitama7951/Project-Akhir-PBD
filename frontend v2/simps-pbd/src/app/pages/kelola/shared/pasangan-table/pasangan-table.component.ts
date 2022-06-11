@@ -11,8 +11,8 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { Observable, Subject, Subscription } from 'rxjs';
+import { map, takeUntil, tap } from 'rxjs/operators';
 import {
   PasanganInterface,
   STATUS_PASANGAN,
@@ -25,7 +25,9 @@ import { PasanganDetailFormComponent } from '../pasangan-detail-form/pasangan-de
   templateUrl: './pasangan-table.component.html',
   styleUrls: ['./pasangan-table.component.scss'],
 })
-export class PasanganTableComponent implements OnInit, OnDestroy {
+export class PasanganTableComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   /* @Input parameter untuk menentukan
    * ini tabel buat mantan | pacar | selingkuhan
    * */
@@ -34,6 +36,7 @@ export class PasanganTableComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   private subscriptions: Subscription = new Subscription();
   public isHandset$!: Observable<boolean>;
+  private destroyed$ = new Subject<boolean>();
 
   dataSource: MatTableDataSource<PasanganInterface> = new MatTableDataSource(
     []
@@ -59,37 +62,42 @@ export class PasanganTableComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptions.add(
-      this._pasanganService.entities$
-        .pipe(
-          map((dataPasangan: PasanganInterface[]) => {
-            return dataPasangan.filter(
-              (pasangan: PasanganInterface) =>
-                pasangan.status_pasangan_id == this.statusPasangan
-            );
-          }),
-          tap((dataPasangan: PasanganInterface[]) => {})
-        )
-        .subscribe((dataPasangan: PasanganInterface[]) => {
-          this.dataSource.data = dataPasangan;
-          setTimeout(() => {
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          }, 500);
-        })
-    );
+    this._pasanganService.entities$
+      .pipe(
+        takeUntil(this.destroyed$),
+        map((dataPasangan: PasanganInterface[]) => {
+          return dataPasangan.filter(
+            (pasangan: PasanganInterface) =>
+              pasangan.status_pasangan_id == this.statusPasangan
+          );
+        }),
+        tap(console.log)
+      )
+      .subscribe((dataPasangan: PasanganInterface[]) => {
+        this.dataSource.data = dataPasangan;
+
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.destroyed$.next(true);
+    this.destroyed$.unsubscribe();
   }
 
-  public openDetailForm(pasangan_id: number): void {
-    let data: Observable<PasanganInterface> =
-      this._pasanganService.selectEntityById(pasangan_id);
+  public openDetailForm(
+    pasanganData: PasanganInterface,
+    pasangan_id?: number
+  ): void {
     const dialogRef: MatDialogRef<PasanganDetailFormComponent> =
       this.dialog.open(PasanganDetailFormComponent, {
-        data: data,
+        data: pasanganData,
       });
 
     dialogRef.afterClosed().subscribe((value: any) => {

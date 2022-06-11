@@ -10,13 +10,26 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+
+import environ
 from pathlib import Path
 import os
+
+# Initialise environment variables
 
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# Get .env
+env = environ.Env(
+        DEBUG=(bool, False),
+        CORS_ALLOW_ALL_ORIGINS=(bool, False),
+        APPEND_SLASH=(bool, False)
+        )
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Path variable
 settings_dir = os.path.dirname(__file__)
@@ -25,21 +38,24 @@ settings_dir = os.path.dirname(__file__)
 SQLSCRIPTS_FOLDER = os.path.join('simps_backend/api_v2/scripts')
 
 # APPEND_SLASH
-APPEND_SLASH = False
+APPEND_SLASH = env('APPEND_SLASH')
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gmcp*0*@_vp42%d3-az7y$4@bes4hprpby8d_rb8gmwbnh)u(1'
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# ALLOWED_HOSTS = ['0.0.0.0']
-ALLOWED_HOSTS = ['simps-api.herokuapp.com', '127.0.0.1', 'localhost']
+DEBUG = env('DEBUG')
 
-CORS_ORIGIN_ALLOW_ALL = True
+# ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = env.list('ALLOWED_HOST')
+
+CORS_ALLOWED_ORIGINS= env.list('CORS_ALLOWED_ORIGINS')
+
+CORS_ORIGIN_ALLOW_ALL = env('CORS_ALLOW_ALL_ORIGINS')
 
 
 # Application definition
@@ -96,12 +112,12 @@ WSGI_APPLICATION = 'simps_backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'banc2y8gpwl1szevxij2',
-        'USER': 'um0plwjtknyeyriw',
-        'HOST': 'banc2y8gpwl1szevxij2-mysql.services.clever-cloud.com', 
-        'PORT': 3306,
-        'PASSWORD': 'VtjSzcCpafPbgRaG0b5k'
+        'ENGINE'  : env('DATABASE_ENGINE'),  
+        'NAME'    : env('DATABASE_NAME'),                  
+        'USER'    : env('DATABASE_USER'),                     
+        'PASSWORD': env('DATABASE_PASSWORD'),              
+        'HOST'    : env('DATABASE_HOST'),                
+        'PORT'    : env('DATABASE_PORT'),
     }
 }
 

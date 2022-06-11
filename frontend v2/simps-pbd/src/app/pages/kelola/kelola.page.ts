@@ -13,9 +13,7 @@ export class KelolaPage implements OnInit, OnDestroy {
     private _laporanService: LaporanComponentService
   ) {}
 
-  ngOnInit() {
-    this._pasanganService.getAll().subscribe(console.log);
-  }
+  ngOnInit() {}
 
   ngOnDestroy(): void {
     this._laporanService.loadLaporan();

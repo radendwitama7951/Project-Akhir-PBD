@@ -45,7 +45,6 @@ export class UserPage implements OnInit, OnDestroy {
           password: [user?.password, [Validators.required]],
           email: [user?.email, [Validators.required, Validators.email]],
         });
-        console.log(user);
       })
     );
   }

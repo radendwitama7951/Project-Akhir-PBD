@@ -128,7 +128,7 @@
         <ion-title>Pengeluaran Bulan Ini</ion-title>
 
         <ion-text>
-          {{ today | date: 'MMMM YYYY' }}
+          {{ today | date:'MMMM yyyy' }}
         </ion-text>
 
         <app-line-chart-pengeluaran></app-line-chart-pengeluaran>
@@ -139,7 +139,7 @@
       <ion-col>
         <ion-title>Pasangan Favorit</ion-title>
         <ion-text class="ion-no-margin">
-          {{ today | date: 'MMMM YYYY' }}
+          {{ today | date:'MMMM yyyy' }}
         </ion-text>
         <app-list-pasangan-favorit ></app-list-pasangan-favorit>
       </ion-col>

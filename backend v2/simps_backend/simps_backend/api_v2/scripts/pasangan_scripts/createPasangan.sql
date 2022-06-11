@@ -4,12 +4,16 @@ INSERT INTO api_v2_pasangan
     last_name,
     special_name,
     avatar,
+    ulang_tahun,
+    tanggal_jadian,
     kencan_terakhir,
     status_pasangan_id
   )
 VALUES
   (
     %s, 
+    %s,
+    %s,
     %s,
     %s,
     %s,

@@ -10,5 +10,8 @@ class Berita (models.Model):
     url = models.URLField()
     thumbnail = models.URLField(verbose_name="Url thumbnail")
 
+    class Meta:
+        verbose_name_plural = 'Berita'
+
     def __str__(self):
         return '%s' % (self.judul)

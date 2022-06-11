@@ -12,6 +12,7 @@ import { SelingkuhanModule } from './selingkuhan/selingkuhan.module';
 import { PasanganDetailFormModule } from './shared/pasangan-detail-form/pasangan-detail-form.module';
 import { PasanganAddFormModule } from './shared/pasangan-add-form/pasangan-add-form.module';
 import { PasanganAddFormTriggerModule } from './shared/pasangan-add-form-trigger/pasangan-add-form-trigger.module';
+import { PasanganService } from 'src/app/core/services/pasangan.service';
 
 @NgModule({
   imports: [
@@ -28,4 +29,8 @@ import { PasanganAddFormTriggerModule } from './shared/pasangan-add-form-trigger
   ],
   declarations: [KelolaPage],
 })
-export class KelolaPageModule {}
+export class KelolaPageModule {
+  constructor(private _pasanganService: PasanganService) {
+    this._pasanganService.load();
+  }
+}

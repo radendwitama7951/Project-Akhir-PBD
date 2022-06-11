@@ -12,13 +12,9 @@ export class KencanPage implements OnInit, OnDestroy {
   constructor(
     private _kencanService: KencanService,
     private _laporanService: LaporanComponentService
-  ) {
-    this._kencanService.getAll();
-  }
+  ) {}
 
   ngOnInit() {}
 
-  ngOnDestroy(): void {
-    this._laporanService.loadLaporan();
-  }
+  ngOnDestroy(): void {}
 }

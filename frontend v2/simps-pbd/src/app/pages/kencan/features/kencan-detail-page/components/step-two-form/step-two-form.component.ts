@@ -12,7 +12,7 @@ import { IonDatetime } from '@ionic/angular';
 import { format, parseISO, getDate, getMonth, getYear } from 'date-fns';
 
 import { Observable, Subscription } from 'rxjs';
-import { map, take } from 'rxjs/operators';
+import { first, map, take } from 'rxjs/operators';
 
 import { KencanInterface } from 'src/app/core/interfaces/kencan.interface';
 import { KencanService } from 'src/app/core/services/kencan.service';
@@ -74,18 +74,15 @@ export class StepTwoFormComponent implements OnInit, OnDestroy {
       Waktu: this.jamKencan,
     };
 
-    let subscriptions: Subscription = this.selectedKencan$.subscribe(
-      (kencan) => {
-        updateTanggalKencan = { ...kencan, ...updateTanggalKencan };
-      }
-    );
+    this.selectedKencan$.pipe(first()).subscribe((kencan) => {
+      updateTanggalKencan = { ...kencan, ...updateTanggalKencan };
+    });
 
     this._kencanService.update(updateTanggalKencan);
+    this._kencanService.load();
 
     this.tanggalKencan = date;
 
-    console.log(this.tanggalKencan, this.minDate);
-    subscriptions.unsubscribe();
     this.showDatePick = false;
   }
 

@@ -19,6 +19,7 @@ BEGIN
     JOIN api_v2_kencan a ON a.pasangan_id=b.pasangan_id
     WHERE a.tanggal BETWEEN dari AND sampai
     GROUP BY b.pasangan_id
+	  HAVING COUNT(a.kencan_id) >= 5
     ORDER BY  COUNT(a.kencan_id) DESC
     LIMIT 5;
 END

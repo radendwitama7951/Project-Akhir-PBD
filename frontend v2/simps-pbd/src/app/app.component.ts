@@ -9,10 +9,5 @@ import { UserService } from './core/services/user.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  constructor(
-    private _userService: UserService,
-    private _laporanService: LaporanComponentService
-  ) {
-    this._userService.getByKey(1);
-  }
+  constructor() {}
 }
