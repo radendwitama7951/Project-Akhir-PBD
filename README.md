@@ -3,21 +3,21 @@ Project Akhir Kelompok 3 Mata Kuliah Praktikum Basis Data 2022
 
 # SIMPS - Sistem Manajemen Mantan Pacar dan Selingkuhan
 #### Modul:
-1.1 Register\n
-1.2 Login\n
-2.1 Edit Profil
-3.1 Berita Cards
-4.1 Tabel Mantan
-4.2 Tabel Pacar
-4.3 Tabel Selingkuhan
-4.5 Form Detail Pasangan
-5.1 Tabel Kencan
-5.2 Filter Tabel Kencan
-5.3 Stepper Form Create Kencan
-5.4 Stepper Form Detail Kencan
-6.1 Laporan Page
-7.1 Kalender
-1. 
+ 1.1 Register
+ 1.2 Login
+ 2.1 Edit Profil
+ 3.1 Berita Cards
+ 4.1 Tabel Mantan
+ 4.2 Tabel Pacar
+ 4.3 Tabel Selingkuhan
+ 4.5 Form Detail Pasangan
+ 5.1 Tabel Kencan
+ 5.2 Filter Tabel Kencan
+ 5.3 Stepper Form Create Kencan
+ 5.4 Stepper Form Detail Kencan
+ 6.1 Laporan Page
+ 7.1 Kalender
+ 
 
 
 # Stack
