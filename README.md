@@ -2,12 +2,22 @@
 Project Akhir Kelompok 3 Mata Kuliah Praktikum Basis Data 2022
 
 # SIMPS - Sistem Manajemen Mantan Pacar dan Selingkuhan
-Modul:
-1. POST anggota baru (CREATE)
-2. GET semua anggota (READ)
-3. GET satu anggota specifik (READ)
-4. PUT perbaharui informasi satu data anggota (UPDATE)
-5. DELETE hapus satu data anggota (DELETE)
+#### Modul:
+1.1 Register
+1.2 Login
+2.1 Edit Profil
+3.1 Berita Cards
+4.1 Tabel Mantan
+4.2 Tabel Pacar
+4.3 Tabel Selingkuhan
+4.5 Form Detail Pasangan
+5.1 Tabel Kencan
+5.2 Filter Tabel Kencan
+5.3 Stepper Form Create Kencan
+5.4 Stepper Form Detail Kencan
+6.1 Laporan Page
+7.1 Kalender
+
 
 # Stack
 **DAMN**
@@ -34,14 +44,17 @@ Database:
 
 Server:
 1. Nginx
- > Frontend:
- > Backend:
+ > Frontend: https://simps.herokuapp.com
+ > Backend: https://simps-api.herokuapp.com
  > Database: https://console.clever-cloud.com/users/me
 
 # RESOURCE
 1. Project Manager : Raden Dwitama Baliano
 2. Software Analyst : Raden Dwitamab Baliano
 3. Software architect :Raden Dwitama Baliano
-4. Programmer & Designer : Raden Dwitama Baliano
+4. Programmer : Raden Dwitama Baliano
+5. Designer : Raden Dwitama Baliano
+6. Database Designer : Raden Dwitama Baliano
+7. Database Manajer : Satya Wirapati, Restu, Danny, Raden Dwitama Baliano
 
 
